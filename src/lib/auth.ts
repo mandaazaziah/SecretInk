@@ -48,8 +48,11 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
-        token.role = (user as { role: string }).role;
+        token.id = user.id as string;
+        // next-auth 'user' type can be AdapterUser or the Credentials return type.
+        // role might be missing in some cases, so guard it.
+        const u = user as unknown as { role?: string };
+        token.role = (u.role ?? "user") as string;
       }
       return token;
     },
