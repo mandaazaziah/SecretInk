@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
@@ -31,6 +31,12 @@ type StatusState = 'Siap' | 'Terenkripsi' | 'Terdekripsi' | 'Tersimpan';
 export default function NotesPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Edit mode
+  const editId = searchParams.get('edit');
+  const isEditMode = !!editId;
+  const [editLoading, setEditLoading] = useState(false);
 
   // Form fields
   const [title, setTitle] = useState('');
@@ -56,6 +62,33 @@ export default function NotesPage() {
       router.push('/login');
     }
   }, [status, router]);
+
+  // ─── Load note data if edit mode ────────────────────────────────────────────
+  useEffect(() => {
+    if (!editId || status !== 'authenticated') return;
+
+    const fetchNoteForEdit = async () => {
+      setEditLoading(true);
+      try {
+        const res = await fetch(`/api/notes/${editId}`);
+        if (res.ok) {
+          const data = await res.json();
+          const note = data.note;
+          setTitle(note.title);
+          setResult(note.encryptedNote);
+          setStatusState('Tersimpan');
+        } else {
+          toast.error('Gagal memuat catatan untuk diedit');
+        }
+      } catch {
+        toast.error('Kesalahan jaringan. Silakan coba lagi.');
+      } finally {
+        setEditLoading(false);
+      }
+    };
+
+    fetchNoteForEdit();
+  }, [editId, status]);
 
   // Validation
   const validate = (action: 'encrypt' | 'decrypt' | 'save'): boolean => {
@@ -167,14 +200,17 @@ export default function NotesPage() {
     }
   };
 
-  // Save handler
+  // Save handler — update jika edit mode, create jika baru
   const handleSave = async () => {
     if (!validate('save')) return;
 
     setIsSaving(true);
     try {
-      const response = await fetch('/api/notes', {
-        method: 'POST',
+      const url = isEditMode ? `/api/notes/${editId}` : '/api/notes';
+      const method = isEditMode ? 'PUT' : 'POST';
+
+      const response = await fetch(url, {
+        method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           title: title.trim(),
@@ -190,7 +226,16 @@ export default function NotesPage() {
       }
 
       setStatusState('Tersimpan');
-      toast.success('Catatan disimpan ke brankas Anda');
+      toast.success(
+        isEditMode
+          ? 'Catatan berhasil diperbarui'
+          : 'Catatan disimpan ke brankas Anda'
+      );
+
+      // Kembali ke dashboard setelah update berhasil
+      if (isEditMode) {
+        setTimeout(() => router.push('/dashboard'), 1000);
+      }
     } catch {
       toast.error('Gagal menyimpan catatan. Silakan coba lagi.');
     } finally {
@@ -281,18 +326,19 @@ export default function NotesPage() {
   };
 
   // Loading state
-  if (status === 'loading') {
+  if (status === 'loading' || editLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-ice">
         <div className="flex flex-col items-center gap-3">
           <div className="spinner-lg" />
-          <p className="text-sm text-muted-foreground font-medium">Memuat...</p>
+          <p className="text-sm text-muted-foreground font-medium">
+            {editLoading ? 'Memuat catatan...' : 'Memuat...'}
+          </p>
         </div>
       </div>
     );
   }
 
-  // Not authenticated - redirect will happen via useEffect
   if (!session) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-ice">
@@ -311,10 +357,9 @@ export default function NotesPage() {
         <div className="mx-auto max-w-6xl flex items-center justify-between px-4 sm:px-6 lg:px-8 h-14">
           <Link href="/dashboard" className="flex items-center gap-2 group">
             <img src="/logo.svg" alt="SecretInk" className="h-7 logo-zoom" />
-            <span
-              className="text-lg font-bold font-[family-name:var(--font-poppins)]"
-            >
-              <span className="text-navy group-hover:text-royal transition-colors">Secret</span><span className="text-royal group-hover:text-royal-light transition-colors">Ink</span>
+            <span className="text-lg font-bold font-[family-name:var(--font-poppins)]">
+              <span className="text-navy group-hover:text-royal transition-colors">Secret</span>
+              <span className="text-royal group-hover:text-royal-light transition-colors">Ink</span>
             </span>
           </Link>
           <Button
@@ -352,11 +397,13 @@ export default function NotesPage() {
                   'font-[family-name:var(--font-poppins)]'
                 )}
               >
-                Catatan Rahasia
+                {isEditMode ? 'Edit Catatan' : 'Catatan Rahasia'}
               </h1>
             </div>
             <p className="text-muted-foreground text-sm sm:text-base ml-[52px]">
-              Buat, enkripsi, dan kelola catatan aman Anda dengan enkripsi standar militer
+              {isEditMode
+                ? 'Dekripsi catatan Anda, ubah isinya, enkripsi ulang, lalu simpan'
+                : 'Buat, enkripsi, dan kelola catatan aman Anda dengan enkripsi standar militer'}
             </p>
           </div>
 
@@ -376,16 +423,13 @@ export default function NotesPage() {
                   'font-[family-name:var(--font-poppins)]'
                 )}
               >
-                Buat Catatan Terenkripsi
+                {isEditMode ? 'Edit Catatan Terenkripsi' : 'Buat Catatan Terenkripsi'}
               </h2>
 
               <div className="space-y-4">
                 {/* Title Input */}
                 <div className="space-y-1.5">
-                  <label
-                    htmlFor="note-title"
-                    className="text-sm font-medium text-navy"
-                  >
+                  <label htmlFor="note-title" className="text-sm font-medium text-navy">
                     Judul
                   </label>
                   <div className="relative input-royal rounded-md">
@@ -413,17 +457,18 @@ export default function NotesPage() {
 
                 {/* Secret Note Textarea */}
                 <div className="space-y-1.5">
-                  <label
-                    htmlFor="note-content"
-                    className="text-sm font-medium text-navy"
-                  >
+                  <label htmlFor="note-content" className="text-sm font-medium text-navy">
                     Catatan Rahasia
                   </label>
                   <div className="relative input-royal rounded-md">
                     <Lock className="absolute left-3 top-3 size-4 text-muted-foreground pointer-events-none" />
                     <Textarea
                       id="note-content"
-                      placeholder="Tulis catatan rahasia Anda di sini..."
+                      placeholder={
+                        isEditMode
+                          ? 'Dekripsi catatan terlebih dahulu, lalu tulis perubahan di sini...'
+                          : 'Tulis catatan rahasia Anda di sini...'
+                      }
                       rows={6}
                       value={noteContent}
                       onChange={(e) => {
@@ -444,10 +489,7 @@ export default function NotesPage() {
 
                 {/* Encryption Key Input */}
                 <div className="space-y-1.5">
-                  <label
-                    htmlFor="encryption-key"
-                    className="text-sm font-medium text-navy"
-                  >
+                  <label htmlFor="encryption-key" className="text-sm font-medium text-navy">
                     Kunci Enkripsi
                   </label>
                   <div className="relative input-royal rounded-md">
@@ -553,7 +595,7 @@ export default function NotesPage() {
                     ) : (
                       <>
                         <Save className="size-4 icon-pop" />
-                        Simpan
+                        {isEditMode ? 'Perbarui' : 'Simpan'}
                       </>
                     )}
                   </Button>
@@ -699,6 +741,15 @@ export default function NotesPage() {
                     <span className="size-1.5 rounded-full bg-mint/50" />
                     {result.length} karakter
                   </span>
+                </div>
+              )}
+
+              {/* Edit mode hint */}
+              {isEditMode && result && statusState === 'Tersimpan' && (
+                <div className="mt-4 rounded-lg bg-royal/5 border border-royal/20 p-3">
+                  <p className="text-xs text-royal font-medium">
+                    💡 Cara edit: Masukkan <strong>Kunci Enkripsi</strong> Anda  → Klik <strong>Dekripsi</strong> → Edit isi catatan → klik <strong>Enkripsi</strong> → klik <strong>Perbarui</strong>
+                  </p>
                 </div>
               )}
             </div>

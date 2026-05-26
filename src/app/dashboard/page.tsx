@@ -180,7 +180,7 @@ export default function DashboardPage() {
   const handleSelectNote = (id: string) => {
     setSelectedNoteId(id);
     fetchNote(id);
-    setSidebarOpen(false); // Close sidebar on mobile after selecting
+    setSidebarOpen(false);
   };
 
   // ─── Decrypt handler ───────────────────────────────────────────────────────
@@ -274,7 +274,7 @@ export default function DashboardPage() {
 
   // ─── Stats computation ─────────────────────────────────────────────────────
   const totalNotes = notes.length;
-  const encryptedCount = notes.length; // All notes are encrypted
+  const encryptedCount = notes.length;
   const latestActivity =
     notes.length > 0 ? formatDate(notes[0].createdAt) : '-';
 
@@ -372,7 +372,6 @@ export default function DashboardPage() {
             <ScrollArea className="flex-1 -mx-1">
               <div className="space-y-1 px-1">
                 {notesLoading ? (
-                  // Loading skeleton
                   [...Array(3)].map((_, i) => (
                     <div key={i} className="rounded-lg p-3">
                       <Skeleton className="mb-2 h-4 w-3/4" />
@@ -380,7 +379,6 @@ export default function DashboardPage() {
                     </div>
                   ))
                 ) : filteredNotes.length === 0 ? (
-                  // Empty state
                   <div className="flex flex-col items-center justify-center py-12 text-center">
                     <div className="mb-3 flex size-14 items-center justify-center rounded-2xl bg-royal/10">
                       <StickyNote className="size-7 text-royal icon-pop" strokeWidth={1.8} />
@@ -397,7 +395,6 @@ export default function DashboardPage() {
                     </Button>
                   </div>
                 ) : (
-                  // Note cards
                   filteredNotes.map((note) => (
                     <div
                       key={note.id}
@@ -457,7 +454,6 @@ export default function DashboardPage() {
         {/* ─── TOP HEADER BAR ─────────────────────────────────────────────── */}
         <header className="glass-strong z-20 flex items-center justify-between border-b border-border/50 px-4 py-3 shadow-soft sm:px-6">
           <div className="flex items-center gap-3">
-            {/* Mobile sidebar toggle */}
             <Button
               variant="ghost"
               size="icon"
@@ -575,10 +571,8 @@ export default function DashboardPage() {
 
             {/* ═══════════ MAIN CONTENT AREA ═══════════ */}
             <div className="flex gap-6">
-              {/* ─── MAIN CONTENT ──────────────────────────────────────────────── */}
               <div className="min-w-0 flex-1">
                 {noteLoading ? (
-                  // Loading state
                   <div className="glass-card rounded-xl p-6 shadow-soft">
                     <Skeleton className="mb-4 h-8 w-1/3" />
                     <Skeleton className="mb-6 h-4 w-1/4" />
@@ -587,7 +581,7 @@ export default function DashboardPage() {
                     <Skeleton className="h-40 w-full" />
                   </div>
                 ) : !selectedNoteId || !selectedNote ? (
-                  // ─── Welcome Screen (No note selected) ─────────────────────
+                  // ─── Welcome Screen ─────────────────────────────────────────
                   <div className="glass-card animate-fade-in-up flex flex-col items-center justify-center rounded-xl p-8 shadow-soft md:p-16">
                     <div
                       className="mb-6 flex size-20 items-center justify-center rounded-2xl"
@@ -611,7 +605,7 @@ export default function DashboardPage() {
                 ) : (
                   // ─── Note Detail View ────────────────────────────────────────
                   <div className="animate-fade-in-up space-y-4">
-                    {/* Note Header */}
+                    {/* Note Header — tanpa tombol Edit */}
                     <div className="glass-card rounded-xl p-6 shadow-soft">
                       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                         <div className="min-w-0 flex-1">
@@ -634,12 +628,6 @@ export default function DashboardPage() {
                             )}
                           </div>
                         </div>
-                        <Button asChild variant="outline" size="sm" className="gap-1.5 shrink-0">
-                          <Link href={`/notes?edit=${selectedNote.id}`}>
-                            <Edit3 className="size-3.5 icon-pop" />
-                            Edit
-                          </Link>
-                        </Button>
                       </div>
                     </div>
 
@@ -708,24 +696,38 @@ export default function DashboardPage() {
                             <Check className="size-4 text-mint icon-pop" />
                             Konten Terdekripsi
                           </h3>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={handleCopy}
-                            className="gap-1.5"
-                          >
-                            {copied ? (
-                              <>
-                                <Check className="size-3.5 text-mint icon-pop" />
-                                Tersalin!
-                              </>
-                            ) : (
-                              <>
-                                <Copy className="size-3.5 icon-pop" />
-                                Salin
-                              </>
-                            )}
-                          </Button>
+                          {/* Tombol Salin + Edit berdampingan */}
+                          <div className="flex items-center gap-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={handleCopy}
+                              className="gap-1.5"
+                            >
+                              {copied ? (
+                                <>
+                                  <Check className="size-3.5 text-mint icon-pop" />
+                                  Tersalin!
+                                </>
+                              ) : (
+                                <>
+                                  <Copy className="size-3.5 icon-pop" />
+                                  Salin
+                                </>
+                              )}
+                            </Button>
+                            <Button
+                              asChild
+                              variant="outline"
+                              size="sm"
+                              className="gap-1.5"
+                            >
+                              <Link href={`/notes?edit=${selectedNote.id}`}>
+                                <Edit3 className="size-3.5 icon-pop" />
+                                Edit
+                              </Link>
+                            </Button>
+                          </div>
                         </div>
                         <div className="rounded-lg bg-ice-dark p-4">
                           <pre className="whitespace-pre-wrap break-words font-sans text-sm leading-relaxed text-navy">
