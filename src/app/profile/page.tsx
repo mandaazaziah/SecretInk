@@ -1,10 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { User, Mail, Shield, Calendar, Save, Loader2, ArrowLeft, CheckCircle2, AlertCircle, Key } from "lucide-react";
+import {
+  User, Mail, Shield, Calendar, Save, Loader2,
+  ArrowLeft, CheckCircle2, AlertCircle, Key, Trash2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,16 +19,12 @@ import { toast } from "sonner";
 export default function ProfilePage() {
   const { data: session, status, update } = useSession();
   const router = useRouter();
+
   const [loading, setLoading] = useState(false);
-  const [profileData, setProfileData] = useState({
-    username: "",
-    email: "",
-  });
+  const [profileData, setProfileData] = useState({ username: "", email: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [originalData, setOriginalData] = useState({
-    username: "",
-    email: "",
-  });
+  const [originalData, setOriginalData] = useState({ username: "", email: "" });
+
   const [passwordData, setPasswordData] = useState({
     currentPassword: "",
     newPassword: "",
@@ -34,21 +33,24 @@ export default function ProfilePage() {
   const [passwordErrors, setPasswordErrors] = useState<Record<string, string>>({});
   const [passwordLoading, setPasswordLoading] = useState(false);
 
+  // Delete modal state
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+
   useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/login");
-    }
+    if (status === "unauthenticated") router.push("/login");
   }, [status, router]);
 
   useEffect(() => {
-    if (session?.user) {
-      const data = {
-        username: session.user.name || "",
-        email: session.user.email || "",
-      };
-      setProfileData(data);
-      setOriginalData(data);
-    }
+    if (!session?.user) return;
+    const username = session.user.name || "";
+    const email = session.user.email || "";
+    setProfileData((prev) =>
+      prev.username === username && prev.email === email ? prev : { username, email }
+    );
+    setOriginalData((prev) =>
+      prev.username === username && prev.email === email ? prev : { username, email }
+    );
   }, [session]);
 
   const validateProfile = () => {
@@ -76,8 +78,12 @@ export default function ProfilePage() {
       newErrors.newPassword = "Kata sandi baru wajib diisi";
     } else if (passwordData.newPassword.length < 8) {
       newErrors.newPassword = "Kata sandi minimal 8 karakter";
-    } else if (!/[A-Z]/.test(passwordData.newPassword) || !/[a-z]/.test(passwordData.newPassword) || !/[0-9]/.test(passwordData.newPassword)) {
-      newErrors.newPassword = "Kata sandi harus mengandung huruf besar, huruf kecil, dan angka";
+    } else if (
+      !/[A-Z]/.test(passwordData.newPassword) ||
+      !/[a-z]/.test(passwordData.newPassword) ||
+      !/[0-9]/.test(passwordData.newPassword)
+    ) {
+      newErrors.newPassword = "Harus mengandung huruf besar, huruf kecil, dan angka";
     }
     if (passwordData.newPassword !== passwordData.confirmPassword) {
       newErrors.confirmPassword = "Kata sandi tidak cocok";
@@ -88,7 +94,6 @@ export default function ProfilePage() {
 
   const handleProfileUpdate = async () => {
     if (!validateProfile()) return;
-
     setLoading(true);
     try {
       const res = await fetch("/api/auth/profile", {
@@ -96,14 +101,8 @@ export default function ProfilePage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(profileData),
       });
-
       const data = await res.json();
-
-      if (!res.ok) {
-        toast.error(data.error || "Pembaruan gagal");
-        return;
-      }
-
+      if (!res.ok) { toast.error(data.error || "Pembaruan gagal"); return; }
       setOriginalData(profileData);
       await update();
       toast.success("Profil berhasil diperbarui!");
@@ -116,7 +115,6 @@ export default function ProfilePage() {
 
   const handlePasswordChange = async () => {
     if (!validatePassword()) return;
-
     setPasswordLoading(true);
     try {
       const res = await fetch("/api/auth/change-password", {
@@ -124,14 +122,8 @@ export default function ProfilePage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(passwordData),
       });
-
       const data = await res.json();
-
-      if (!res.ok) {
-        toast.error(data.error || "Pengubahan kata sandi gagal");
-        return;
-      }
-
+      if (!res.ok) { toast.error(data.error || "Pengubahan kata sandi gagal"); return; }
       setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "" });
       toast.success("Kata sandi berhasil diubah!");
     } catch {
@@ -141,7 +133,26 @@ export default function ProfilePage() {
     }
   };
 
-  const hasProfileChanges = profileData.username !== originalData.username || profileData.email !== originalData.email;
+  const handleDeleteAccount = async () => {
+    setDeleteLoading(true);
+    try {
+      const res = await fetch("/api/auth/profile", { method: "DELETE" });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) { toast.error(data.error || "Gagal menghapus akun"); return; }
+      toast.success("Akun berhasil dihapus");
+      await signOut({ redirect: false });
+      router.push("/login");
+    } catch {
+      toast.error("Terjadi kesalahan saat menghapus akun");
+    } finally {
+      setDeleteLoading(false);
+      setShowDeleteModal(false);
+    }
+  };
+
+  const hasProfileChanges =
+    profileData.username !== originalData.username ||
+    profileData.email !== originalData.email;
 
   if (status === "loading") {
     return (
@@ -158,15 +169,14 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Simple Top Bar */}
+      {/* Top Bar */}
       <header className="sticky top-0 z-50 glass-strong border-b border-border/50">
         <div className="mx-auto max-w-2xl flex items-center justify-between px-4 sm:px-6 lg:px-8 h-14">
           <Link href="/dashboard" className="flex items-center gap-2 group">
             <img src="/logo.svg" alt="SecretInk" className="h-7 logo-zoom" />
-            <span
-              className="text-lg font-bold font-[family-name:var(--font-poppins)]"
-            >
-              <span className="text-navy group-hover:text-royal transition-colors">Secret</span><span className="text-royal group-hover:text-royal-light transition-colors">Ink</span>
+            <span className="text-lg font-bold font-[family-name:var(--font-poppins)]">
+              <span className="text-navy group-hover:text-royal transition-colors">Secret</span>
+              <span className="text-royal group-hover:text-royal-light transition-colors">Ink</span>
             </span>
           </Link>
           <Button
@@ -188,15 +198,23 @@ export default function ProfilePage() {
         <div className="floating-orb" />
         <div className="floating-orb" />
       </div>
+
       <main className="flex-1 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto space-y-6 animate-fade-in-up">
           {/* Header */}
           <div className="flex items-center gap-4 mb-8">
-            <Button variant="ghost" size="icon" onClick={() => router.back()} className="hover:bg-white/50">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => router.back()}
+              className="hover:bg-white/50"
+            >
               <ArrowLeft className="h-5 w-5 icon-pop" />
             </Button>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-poppins)]" style={{ fontFamily: 'Poppins, sans-serif' }}>
+              <h1
+                className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-poppins)]"
+              >
                 Pengaturan Profil
               </h1>
               <p className="text-muted-foreground text-sm">Kelola informasi akun Anda</p>
@@ -205,23 +223,25 @@ export default function ProfilePage() {
 
           {/* Profile Info Card */}
           <Card className="glass-card shadow-soft-lg border-0 rounded-2xl overflow-hidden">
-            <CardHeader className="pb-4">
+            <CardHeader className="pb-1">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-full bg-gradient-to-br from-royal to-royal-dark flex items-center justify-center text-white font-bold text-lg">
-                  {session.user.name?.charAt(0).toUpperCase() || "U"}
+                  {session.user?.name?.charAt(0).toUpperCase() || "U"}
                 </div>
                 <div>
-                  <CardTitle style={{ fontFamily: 'Poppins, sans-serif' }} className="text-lg">{session.user.name}</CardTitle>
-                  <CardDescription>{session.user.email}</CardDescription>
+                  <CardTitle style={{ fontFamily: "Poppins, sans-serif" }} className="text-lg">
+                    {session.user?.name}
+                  </CardTitle>
+                  <CardDescription>{session.user?.email}</CardDescription>
                 </div>
-                <Badge className="ml-auto bg-mint/10 text-mint border-mint/20 hover:bg-mint/20">
+                <Badge className="ml-auto bg-blue-500/10 text-blue-500 border-blue-500/20 hover:bg-blue-500/20">
                   <Shield className="h-3 w-3 mr-1 icon-pop" />
                   {(session.user as { role: string }).role || "user"}
                 </Badge>
               </div>
             </CardHeader>
             <Separator className="opacity-50" />
-            <CardContent className="pt-6 space-y-4">
+            <CardContent className="pt-1 space-y-3">
               <div className="space-y-2">
                 <Label htmlFor="username" className="flex items-center gap-2">
                   <User className="h-4 w-4 text-royal icon-pop" />
@@ -265,7 +285,8 @@ export default function ProfilePage() {
 
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Calendar className="h-4 w-4 icon-pop" />
-                Bergabung sejak {new Date().toLocaleDateString("id-ID", { month: "long", year: "numeric" })}
+                Bergabung sejak{" "}
+                {new Date().toLocaleDateString("id-ID", { month: "long", year: "numeric" })}
               </div>
 
               <Button
@@ -291,14 +312,16 @@ export default function ProfilePage() {
           {/* Change Password Card */}
           <Card className="glass-card shadow-soft-lg border-0 rounded-2xl overflow-hidden">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2" style={{ fontFamily: 'Poppins, sans-serif' }}>
+              <CardTitle className="flex items-center gap-2" style={{ fontFamily: "Poppins, sans-serif" }}>
                 <Key className="h-5 w-5 text-royal icon-pop" />
                 Ubah Kata Sandi
               </CardTitle>
-              <CardDescription>Perbarui kata sandi akun Anda untuk keamanan yang lebih baik</CardDescription>
+              <CardDescription>
+                Perbarui kata sandi akun Anda untuk keamanan yang lebih baik
+              </CardDescription>
             </CardHeader>
             <Separator className="opacity-50" />
-            <CardContent className="pt-6 space-y-4">
+            <CardContent className="pt-1 space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="currentPassword">Kata Sandi Saat Ini</Label>
                 <Input
@@ -373,6 +396,37 @@ export default function ProfilePage() {
             </CardContent>
           </Card>
 
+          {/* Delete Account Card */}
+          <Card className="glass-card shadow-soft-lg border-0 rounded-2xl overflow-hidden border border-red-100">
+            <CardHeader>
+              <CardTitle
+                className="flex items-center gap-2"
+                style={{ fontFamily: "Poppins, sans-serif" }}
+              >
+                <Trash2 className="h-5 w-5 text-red-500 icon-pop" />
+                Hapus Akun
+              </CardTitle>
+              <CardDescription>
+                Tindakan ini permanen dan tidak dapat dibatalkan
+              </CardDescription>
+            </CardHeader>
+            <Separator className="opacity-50" />
+            <CardContent className="pt-1 space-y-4">
+              <p className="text-sm text-muted-foreground mb-4">
+                Menghapus akun akan menghapus semua data Anda termasuk seluruh catatan
+                terenkripsi secara permanen.
+              </p>
+              <Button
+                variant="destructive"
+                onClick={() => setShowDeleteModal(true)}
+                className="w-full rounded-xl h-11"
+              >
+                <Trash2 className="h-4 w-4 mr-2" />
+                Hapus Akun Saya
+              </Button>
+            </CardContent>
+          </Card>
+
           {/* Security Info */}
           <Card className="glass-card shadow-soft-lg border-0 rounded-2xl overflow-hidden">
             <CardContent className="pt-6">
@@ -381,8 +435,10 @@ export default function ProfilePage() {
                 <div>
                   <p className="font-medium text-navy">Pemberitahuan Keamanan</p>
                   <p className="text-sm text-muted-foreground mt-1">
-                    Kata sandi Anda dilindungi dengan hashing bcrypt. SecretInk tidak pernah menyimpan kunci enkripsi Anda.
-                    Mengubah kata sandi tidak mempengaruhi catatan terenkripsi Anda — Anda tetap memerlukan kunci enkripsi asli untuk mendekripsinya.
+                    Kata sandi Anda dilindungi dengan hashing bcrypt. SecretInk tidak
+                    pernah menyimpan kunci enkripsi Anda. Mengubah kata sandi tidak
+                    mempengaruhi catatan terenkripsi Anda — Anda tetap memerlukan kunci
+                    enkripsi asli untuk mendekripsinya.
                   </p>
                 </div>
               </div>
@@ -390,6 +446,83 @@ export default function ProfilePage() {
           </Card>
         </div>
       </main>
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fade-in"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setShowDeleteModal(false);
+          }}
+        >
+          <div className="bg-white rounded-2xl shadow-soft-lg w-full max-w-md p-6 animate-fade-in-up border border-red-100">
+            {/* Icon */}
+            <div className="flex justify-center mb-4">
+              <div className="flex size-16 items-center justify-center rounded-full bg-red-100">
+                <Trash2 className="size-8 text-red-500" />
+              </div>
+            </div>
+
+            {/* Text */}
+            <h2
+              className="text-xl font-bold text-center text-navy mb-2"
+              style={{ fontFamily: "Poppins, sans-serif" }}
+            >
+              Hapus Akun?
+            </h2>
+            <p className="text-sm text-center text-muted-foreground mb-4">
+              Tindakan ini{" "}
+              <span className="font-semibold text-red-500">tidak dapat dibatalkan</span>.
+            </p>
+
+            {/* Warning list */}
+            <div className="rounded-xl bg-red-50 border border-red-100 p-3 mb-6 space-y-1.5">
+              <p className="text-sm text-red-600 flex items-center gap-2">
+                <AlertCircle className="size-3.5 shrink-0" />
+                Semua catatan terenkripsi Anda akan dihapus
+              </p>
+              <p className="text-sm text-red-600 flex items-center gap-2">
+                <AlertCircle className="size-3.5 shrink-0" />
+                Data akun dihapus permanen
+              </p>
+              <p className="text-sm text-red-600 flex items-center gap-2">
+                <AlertCircle className="size-3.5 shrink-0" />
+                Akun tidak dapat dipulihkan kembali
+              </p>
+            </div>
+
+            {/* Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3">
+             <Button
+              variant="outline"
+              onClick={() => setShowDeleteModal(false)}
+              disabled={deleteLoading}
+              className="flex-1 rounded-xl h-11 border-border/60 text-slate-700 hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300 transition-colors duration-200"
+            >
+              Batal
+            </Button>
+              <Button
+                variant="destructive"
+                onClick={handleDeleteAccount}
+                disabled={deleteLoading}
+                className="flex-1 rounded-xl h-11"
+              >
+                {deleteLoading ? (
+                  <>
+                    <Loader2 className="size-4 mr-2 animate-spin" />
+                    Menghapus...
+                  </>
+                ) : (
+                  <>
+                    <Trash2 className="size-4 mr-2" />
+                    Ya, Hapus Akun
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

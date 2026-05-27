@@ -37,6 +37,7 @@ export default function NotesPage() {
   const editId = searchParams.get('edit');
   const isEditMode = !!editId;
   const [editLoading, setEditLoading] = useState(false);
+  const [hasDecrypted, setHasDecrypted] = useState(false);
 
   // Form fields
   const [title, setTitle] = useState('');
@@ -115,9 +116,19 @@ export default function NotesPage() {
     }
 
     if (action === 'save') {
+      // Saat edit mode: wajib sudah decrypt sukses dulu
+      // (agar tombol Perbarui tidak bisa langsung mengupdate ciphertext lama)
+      if (isEditMode) {
+        if (!hasDecrypted) {
+          newErrors.save = 'Untuk edit: klik Dekripsi dulu (dengan kunci enkripsi), lalu perbarui setelah enkripsi ulang.';
+        }
+      }
+
+      // Tetap wajib enkripsi ulang sebelum menyimpan
       if (statusState !== 'Terenkripsi' && statusState !== 'Tersimpan') {
         newErrors.save = 'Anda harus mengenkripsi catatan sebelum menyimpan';
       }
+
       if (!result.trim()) {
         newErrors.save = 'Tidak ada hasil enkripsi untuk disimpan';
       }
@@ -161,6 +172,7 @@ export default function NotesPage() {
       setResult(data.encrypted);
       setStatusState('Terenkripsi');
       toast.success('Catatan berhasil dienkripsi');
+
     } catch {
       toast.error('Enkripsi gagal. Silakan coba lagi.');
     } finally {
@@ -186,13 +198,15 @@ export default function NotesPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        toast.error(data.error || 'Dekripsi gagal');
+      toast.error(data.error || 'Dekripsi gagal');
         return;
       }
 
       setResult(data.decrypted);
       setStatusState('Terdekripsi');
+      setHasDecrypted(true);
       toast.success('Catatan berhasil didekripsi');
+
     } catch {
       toast.error('Dekripsi gagal. Silakan coba lagi.');
     } finally {
@@ -201,10 +215,12 @@ export default function NotesPage() {
   };
 
   // Save handler — update jika edit mode, create jika baru
+
   const handleSave = async () => {
     if (!validate('save')) return;
 
     setIsSaving(true);
+
     try {
       const url = isEditMode ? `/api/notes/${editId}` : '/api/notes';
       const method = isEditMode ? 'PUT' : 'POST';
@@ -264,6 +280,7 @@ export default function NotesPage() {
     setEncryptionKey('');
     setResult('');
     setStatusState('Siap');
+    setHasDecrypted(false);
     setErrors({});
     toast.info('Semua kolom telah dibersihkan');
   };
@@ -510,7 +527,7 @@ export default function NotesPage() {
                     />
                     <button
                       type="button"
-                      onClick={() => setShowKey(!showKey)}
+                      onClick={() => setShowKey((v) => !v)}
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-navy transition-colors cursor-pointer"
                       aria-label={showKey ? 'Sembunyikan kunci enkripsi' : 'Tampilkan kunci enkripsi'}
                     >
@@ -579,7 +596,7 @@ export default function NotesPage() {
                   {/* Save Button */}
                   <Button
                     onClick={handleSave}
-                    disabled={isSaving}
+                    disabled={isSaving || (isEditMode && !hasDecrypted)}
                     className={cn(
                       'btn-mint rounded-lg h-10 text-sm font-semibold cursor-pointer',
                       'font-[family-name:var(--font-poppins)]',
