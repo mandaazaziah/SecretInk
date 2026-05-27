@@ -45,21 +45,21 @@ const howItWorksSteps = [
     number: 1,
     icon: Edit,
     title: 'Tulis Catatan',
-    description: 'Pengguna menulis catatan di editor SecretInk',
+    description: 'Buat catatan baru Anda di dalam editor SecretInk.',
     color: 'bg-royal',
   },
   {
     number: 2,
     icon: KeyRound,
     title: 'Berikan Kunci Enkripsi',
-    description: 'Pengguna memberikan kunci enkripsi pribadi mereka',
+    description: 'Tentukan dan masukkan kata sandi atau kunci enkripsi pribadi Anda',
     color: 'bg-royal',
   },
   {
     number: 3,
     icon: Lock,
     title: 'AES-256-CBC Mengenkripsi',
-    description: 'Catatan dienkripsi menggunakan AES-256-CBC dengan kunci tersebut',
+    description: 'Sistem secara otomatis mengenkripsi catatan menggunakan algoritma AES-256-CBC berbasis kunci yang Anda berikan.',
     color: 'bg-royal',
   },
   {
@@ -73,14 +73,14 @@ const howItWorksSteps = [
     number: 5,
     icon: Shield,
     title: 'Kunci Diperlukan untuk Dekripsi',
-    description: 'Hanya kunci pengguna yang dapat mendekripsi catatan kembali ke teks biasa',
+    description: 'Proses pengembalian data menjadi teks biasa (dekripsi) dapat dibuka dan dibaca ulang secara utuh menggunakan kunci enkripsi milik Anda..',
     color: 'bg-mint',
   },
   {
     number: 6,
     icon: EyeOff,
     title: 'Server Tidak Pernah Melihat Kunci',
-    description: 'Kunci enkripsi Anda TIDAK PERNAH dikirim ke server kami untuk disimpan',
+    description: 'Kami menerapkan sistem Zero-Knowledge: server tidak pernah memiliki akses ke kunci enkripsi atau data asli Anda, memastikan privasi dan keamanan maksimal.',
     color: 'bg-mint',
   },
 ];
@@ -136,34 +136,24 @@ export default function AboutPage() {
         {/* ═══════════════════ HERO SECTION ═══════════════════ */}
         <section className="relative flex min-h-[60vh] items-center justify-center px-4 pt-28 pb-12 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-4xl text-center">
-            {/* Decorative shield */}
-            <div className="animate-fade-in-up mb-6 flex justify-center">
-              <div className="relative flex size-20 items-center justify-center rounded-2xl glass-card shadow-soft-lg sm:size-24 logo-zoom">
-                <Lock className="size-9 text-royal sm:size-11 icon-pop" strokeWidth={1.8} />
-                <div className="absolute -right-1 -top-1 flex size-6 items-center justify-center rounded-full bg-mint text-white">
-                  <Check className="size-3.5" strokeWidth={3} />
-                </div>
-              </div>
-            </div>
-
             {/* Main heading */}
             <div className="animate-fade-in-up delay-100">
-              <h1 className="font-heading text-4xl font-bold tracking-tight text-navy sm:text-5xl md:text-6xl">
-                Tentang <span className="gradient-text-royal">SecretInk</span>
+              <h1 className="font-heading text-3xl font-bold tracking-tight text-navy sm:text-4xl md:text-5xl">
+                Mengenal <span className="gradient-text-royal">SecretInk</span>
               </h1>
             </div>
 
-            {/* Subtitle */}
-            <div className="animate-fade-in-up delay-200 mx-auto mt-5 max-w-2xl">
-              <p className="font-sans text-lg leading-relaxed text-navy/60 sm:text-xl">
-                Memahami kriptografi di balik keamanan Anda
-              </p>
-            </div>
+         {/* Subtitle */}
+          <div className="animate-fade-in-up delay-200 mx-auto mt-5 max-w-2xl">
+            <p className="font-sans text-base sm:text-lg leading-relaxed text-navy/60">
+              Memahami teknologi enkripsi yang melindungi informasi Anda dari akses tidak sah, dengan sistem kriptografi yang dirancang untuk menjaga keamanan, integritas, dan kerahasiaan data digital.
+            </p>
+          </div>
           </div>
         </section>
 
         {/* ═══════════════════ WHAT IS CRYPTOGRAPHY ═══════════════════ */}
-        <section className="relative px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+        <section className="relative px-4 py-2 sm:px-6 sm:py-4 lg:px-8">
           <div className="mx-auto max-w-6xl">
             {/* Section heading */}
             <div className="animate-fade-in-up mb-14 text-center sm:mb-16">
@@ -171,11 +161,8 @@ export default function AboutPage() {
                 <Shield className="size-6 text-royal icon-pop" strokeWidth={2} />
               </div>
               <h2 className="font-heading text-3xl font-bold text-navy sm:text-4xl">
-                Apa Itu <span className="gradient-text-royal">Kriptografi</span>?
+                Apa Itu <span className="gradient-text-royal">Kriptografi ?</span>
               </h2>
-              <p className="mx-auto mt-4 max-w-xl font-sans text-base text-navy/50">
-                Ilmu menjaga keamanan informasi selama ribuan tahun.
-              </p>
             </div>
 
             {/* Explanation card */}
@@ -188,8 +175,7 @@ export default function AboutPage() {
                       <Check className="size-3.5 text-royal" strokeWidth={3} />
                     </div>
                     <p className="font-sans text-sm leading-relaxed text-navy/70 sm:text-base">
-                      <strong className="text-navy">Kriptografi</strong> adalah praktik mengamankan komunikasi dan data
-                      sehingga hanya pihak yang berwenang yang dapat mengaksesnya.
+                      <strong className="text-navy">Kriptografi</strong> adalah ilmu untuk menjaga kerahasiaan data dalam proses komunikasi digital agar tidak dapat dibaca oleh pihak lain tanpa izin.
                     </p>
                   </div>
                   <div className="flex items-start gap-3">
@@ -197,7 +183,7 @@ export default function AboutPage() {
                       <Check className="size-3.5 text-royal" strokeWidth={3} />
                     </div>
                     <p className="font-sans text-sm leading-relaxed text-navy/70 sm:text-base">
-                      Ia mengubah data yang dapat dibaca (<strong className="text-navy">teks biasa</strong>) menjadi format
+                      <strong className="text-navy">Kriptografi</strong> mengubah data yang dapat dibaca (<strong className="text-navy">teks biasa</strong>) menjadi format
                       yang tidak terbaca (<strong className="text-navy">teks sandi</strong>) menggunakan algoritma matematika.
                     </p>
                   </div>
@@ -206,8 +192,7 @@ export default function AboutPage() {
                       <Check className="size-3.5 text-royal" strokeWidth={3} />
                     </div>
                     <p className="font-sans text-sm leading-relaxed text-navy/70 sm:text-base">
-                      Hanya pihak yang berwenang dengan <strong className="text-navy">kunci</strong> yang benar dapat
-                      mengakses data asli dengan membalikkan prosesnya.
+                     Akses ke data asli hanya dapat dilakukan dengan <strong className="text-navy">Kunci Dekripsi</strong> yang sesuai, memastikan bahwa hanya pihak yang berwenang yang dapat membaca informasi sensitif.
                     </p>
                   </div>
                   <div className="flex items-start gap-3">
@@ -215,8 +200,8 @@ export default function AboutPage() {
                       <Check className="size-3.5 text-royal" strokeWidth={3} />
                     </div>
                     <p className="font-sans text-sm leading-relaxed text-navy/70 sm:text-base">
-                      Digunakan selama berabad-abad, dari <strong className="text-navy">sandi kuno</strong> hingga{' '}
-                      <strong className="text-navy">algoritma modern</strong> yang melindungi internet saat ini.
+                      Digunakan sejak zaman kuno hingga era digital dengan 
+                      <strong className="text-navy"> algoritma modern</strong> yang melindungi data dan informasi pada internet saat ini.
                     </p>
                   </div>
                 </div>
@@ -234,7 +219,7 @@ export default function AboutPage() {
                         <FileText className="size-5 shrink-0 text-royal icon-pop" />
                         <div>
                           <p className="font-heading text-xs font-semibold text-navy">Teks Biasa</p>
-                          <p className="font-sans text-[11px] text-navy/50">Data yang dapat dibaca</p>
+                          <p className="font-sans text-[11px] text-navy/50">Data asli yang dapat dibaca</p>
                         </div>
                       </div>
 
@@ -245,7 +230,7 @@ export default function AboutPage() {
                         <KeyRound className="size-5 shrink-0 text-royal icon-pop" />
                         <div>
                           <p className="font-heading text-xs font-semibold text-navy">Kunci Enkripsi</p>
-                          <p className="font-sans text-[11px] text-navy/50">Mengubah data</p>
+                          <p className="font-sans text-[11px] text-navy/50">Mengubah data melalui proses enkripsi</p>
                         </div>
                       </div>
 
@@ -267,7 +252,7 @@ export default function AboutPage() {
                         <KeyRound className="size-5 shrink-0 text-mint icon-pop" />
                         <div>
                           <p className="font-heading text-xs font-semibold text-navy">Kunci Dekripsi</p>
-                          <p className="font-sans text-[11px] text-navy/50">Membalikkan proses</p>
+                          <p className="font-sans text-[11px] text-navy/50">Membalikkan proses dan memulihkan data asli</p>
                         </div>
                       </div>
 
@@ -278,7 +263,7 @@ export default function AboutPage() {
                         <Check className="size-5 shrink-0 text-mint icon-pop" />
                         <div>
                           <p className="font-heading text-xs font-semibold text-navy">Teks Asli</p>
-                          <p className="font-sans text-[11px] text-navy/50">Data dipulihkan</p>
+                          <p className="font-sans text-[11px] text-navy/50">Data dipulihkan & dapat dibaca kembali</p>
                         </div>
                       </div>
                     </div>
@@ -290,7 +275,7 @@ export default function AboutPage() {
         </section>
 
         {/* ═══════════════════ AES-256 ENCRYPTION ═══════════════════ */}
-        <section className="relative px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+        <section className="relative px-4 py-16 sm:px-6 sm:py-18 lg:px-8">
           <div className="mx-auto max-w-6xl">
             {/* Section heading */}
             <div className="animate-fade-in-up mb-14 text-center sm:mb-16">
@@ -301,7 +286,7 @@ export default function AboutPage() {
                 Enkripsi <span className="gradient-text-royal">AES-256</span>
               </h2>
               <p className="mx-auto mt-4 max-w-xl font-sans text-base text-navy/50">
-                Standar emas dalam enkripsi simetris, dipercaya di seluruh dunia.
+                Standar enkripsi simetris yang digunakan secara global untuk melindungi data sensitif.
               </p>
             </div>
 
@@ -313,8 +298,7 @@ export default function AboutPage() {
                     <Check className="size-3.5 text-royal" strokeWidth={3} />
                   </div>
                   <p className="font-sans text-sm leading-relaxed text-navy/70 sm:text-base">
-                    <strong className="text-navy">Advanced Encryption Standard (AES)</strong> adalah algoritma enkripsi
-                    simetris, artinya kunci yang sama digunakan untuk enkripsi dan dekripsi.
+                    <strong className="text-navy">Advanced Encryption Standard (AES)</strong> adalah jenis algoritma enkripsi simetris, di mana kunci yang sama digunakan untuk proses enkripsi dan dekripsi.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
@@ -322,8 +306,7 @@ export default function AboutPage() {
                     <Check className="size-3.5 text-royal" strokeWidth={3} />
                   </div>
                   <p className="font-sans text-sm leading-relaxed text-navy/70 sm:text-base">
-                    Diadopsi oleh <strong className="text-navy">pemerintah AS</strong> dan digunakan di seluruh dunia untuk
-                    mengamankan segalanya mulai dari transaksi perbankan hingga komunikasi militer yang dirahasiakan.
+                    Diadopsi secara <strong className="text-navy">global</strong>  untuk mengamankan data sensitif, mulai dari transaksi perbankan hingga komunikasi tingkat tinggi.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
@@ -331,8 +314,7 @@ export default function AboutPage() {
                     <Check className="size-3.5 text-royal" strokeWidth={3} />
                   </div>
                   <p className="font-sans text-sm leading-relaxed text-navy/70 sm:text-base">
-                    Kunci <strong className="text-navy">256-bit</strong> menyediakan 2<sup>256</sup> kemungkinan kombinasi
-                    — itu lebih banyak dari jumlah atom di alam semesta yang teramati.
+                    Kunci <strong className="text-navy">256-bit</strong> menyediakan 2<sup>256</sup> kemungkinan kombinasi, jumlah yang secara praktis tidak mungkin dipecahkan dengan brute force.
                   </p>
                 </div>
                 <div className="flex items-start gap-3">
@@ -340,7 +322,7 @@ export default function AboutPage() {
                     <Check className="size-3.5 text-royal" strokeWidth={3} />
                   </div>
                   <p className="font-sans text-sm leading-relaxed text-navy/70 sm:text-base">
-                    Digunakan oleh <strong className="text-navy">NSA</strong> untuk melindungi informasi RAHASIA BESAR,
+                    Digunakan oleh <strong className="text-navy">NSA</strong> untuk melindungi informasi rahasia, AES-256 telah diakui sebagai standar enkripsi tingkat tinggi yang 
                     menjadikannya tingkat izin enkripsi tertinggi yang tersedia.
                   </p>
                 </div>
@@ -350,80 +332,103 @@ export default function AboutPage() {
                   </div>
                   <p className="font-sans text-sm leading-relaxed text-navy/70 sm:text-base">
                     Serangan brute force pada AES-256 akan memakan waktu <strong className="text-mint">miliaran tahun</strong>{' '}
-                    bahkan dengan superkomputer tercepat di dunia — secara komputasi tidak dapat dipecahkan.
+                    membutuhkan waktu yang secara komputasi tidak realistis, bahkan dengan superkomputer modern.
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Key specs grid */}
-            <div className="animate-fade-in-up delay-200 grid grid-cols-2 gap-4 sm:gap-6 mb-8 md:grid-cols-4">
-              {aesKeySpecs.map((spec) => {
-                const Icon = spec.icon;
-                return (
-                  <div
-                    key={spec.label}
-                    className="glass-card rounded-2xl p-5 text-center shadow-soft transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-1"
-                  >
-                    <div className="mx-auto mb-3 flex size-10 items-center justify-center rounded-xl bg-royal/10">
-                      <Icon className="size-5 text-royal icon-pop" strokeWidth={2} />
-                    </div>
-                    <p className="font-heading text-xl font-bold text-navy sm:text-2xl">{spec.value}</p>
-                    <p className="mt-1 font-sans text-xs text-navy/50 sm:text-sm">{spec.label}</p>
-                  </div>
-                );
-              })}
-            </div>
+          {/* Key specs grid */}
+          <div className="animate-fade-in-up grid grid-cols-2 gap-4 sm:gap-6 mb-8 md:grid-cols-4 [animation-delay:200ms]">
+            {aesKeySpecs.map((spec, index) => {
+              const Icon = spec.icon;
 
-            {/* Security comparison */}
-            <div className="glass-card animate-fade-in-up delay-300 rounded-2xl p-6 shadow-soft-lg sm:p-8">
-              <h3 className="font-heading mb-6 text-lg font-semibold text-navy sm:text-xl">
-                Perbandingan Keamanan
-              </h3>
-              <div className="space-y-4">
-                {securityComparison.map((item) => (
-                  <div key={item.method} className="flex items-center gap-4">
-                    <p className="w-24 shrink-0 font-heading text-sm font-medium text-navy sm:w-32 sm:text-base">
-                      {item.method}
-                    </p>
-                    <div className="flex-1">
-                      <div className="h-3 w-full overflow-hidden rounded-full bg-navy/5">
-                        <div
-                          className={`h-full rounded-full transition-all duration-700 ${
-                            item.strength === 100
-                              ? 'bg-gradient-to-r from-royal to-mint'
-                              : item.strength === 70
-                                ? 'bg-royal/60'
-                                : item.strength === 15
-                                  ? 'bg-amber-400'
-                                  : 'bg-red-400'
-                          }`}
-                          style={{ width: `${Math.max(item.strength, 3)}%` }}
-                        />
-                      </div>
-                    </div>
-                    <span
-                      className={`shrink-0 font-sans text-xs font-semibold sm:text-sm ${
-                        item.strength === 100
-                          ? 'text-mint'
-                          : item.strength === 70
-                            ? 'text-royal'
-                            : item.strength === 15
-                              ? 'text-amber-500'
-                              : 'text-red-500'
-                      }`}
-                    >
-                      {item.label}
-                    </span>
+              return (
+                <div
+                  key={spec.label}
+                  className="glass-card group rounded-2xl p-5 text-center shadow-soft transform transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] border-2 border-transparent hover:border-royal/40 hover:-translate-y-2 hover:shadow-soft-lg hover:bg-white/60"
+                  style={{ animationDelay: `${(index + 2) * 100}ms`, animationFillMode: 'both' }}
+                >
+                  {/* Icon */}
+                  <div className="mx-auto mb-3 flex size-10 items-center justify-center rounded-xl bg-royal/10 transition-all duration-500 ease-out group-hover:bg-royal group-hover:scale-110">
+                    <Icon
+                      className="size-5 text-royal transition-colors duration-500 group-hover:text-white"
+                      strokeWidth={2}
+                    />
                   </div>
-                ))}
-              </div>
+
+                  {/* Value */}
+                  <p className="font-heading text-xl font-bold text-navy sm:text-2xl transition-colors duration-300 group-hover:text-royal">
+                    {spec.value}
+                  </p>
+
+                  {/* Label */}
+                  <p className="mt-1 font-sans text-xs text-navy/50 sm:text-sm transition-colors duration-300 group-hover:text-navy/70">
+                    {spec.label}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+
+         {/* Security comparison */}
+          <div className="glass-card animate-fade-in-up delay-300 rounded-2xl p-6 shadow-soft-lg sm:p-8">
+            <h3 className="font-heading mb-6 text-lg font-semibold text-navy sm:text-xl">
+              Perbandingan Keamanan
+            </h3>
+
+            <div className="space-y-5">
+              {securityComparison.map((item) => (
+                <div
+                  key={item.method}
+                  className="group flex items-center gap-4 rounded-xl px-2 py-2 transition-all duration-300 hover:bg-navy/5"
+                >
+                  {/* Method */}
+                  <p className="w-24 shrink-0 font-heading text-sm font-medium text-navy sm:w-32 sm:text-base transition-all duration-300 group-hover:text-royal">
+                    {item.method}
+                  </p>
+
+                  {/* Bar */}
+                  <div className="flex-1">
+                    <div className="h-3 w-full overflow-hidden rounded-full bg-navy/5">
+                      <div
+                        className={`h-full rounded-full transition-all duration-700 ease-out ${
+                          item.strength === 100
+                            ? 'bg-gradient-to-r from-royal to-mint shadow-[0_0_10px_rgba(59,130,246,0.3)]'
+                            : item.strength === 70
+                              ? 'bg-royal/70 shadow-[0_0_8px_rgba(59,130,246,0.25)]'
+                              : item.strength === 15
+                                ? 'bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.25)]'
+                                : 'bg-red-400 shadow-[0_0_6px_rgba(239,68,68,0.25)]'
+                        }`}
+                        style={{ width: `${Math.max(item.strength, 4)}%` }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Label */}
+                  <span
+                    className={`shrink-0 font-sans text-xs font-semibold sm:text-sm transition-all duration-300 ${
+                      item.strength === 100
+                        ? 'text-mint group-hover:scale-105'
+                        : item.strength === 70
+                          ? 'text-royal group-hover:scale-105'
+                          : item.strength === 15
+                            ? 'text-amber-500 group-hover:scale-105'
+                            : 'text-red-500 group-hover:scale-105'
+                    }`}
+                  >
+                    {item.label}
+                  </span>
+                </div>
+              ))}
             </div>
+          </div>
           </div>
         </section>
 
         {/* ═══════════════════ BCRYPT PASSWORD HASHING ═══════════════════ */}
-        <section className="relative px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+        <section className="relative px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
           <div className="mx-auto max-w-6xl">
             {/* Section heading */}
             <div className="animate-fade-in-up mb-14 text-center sm:mb-16">
@@ -434,22 +439,22 @@ export default function AboutPage() {
                 Proteksi Password <span className="gradient-text-royal">Bcrypt</span>
               </h2>
               <p className="mx-auto mt-4 max-w-xl font-sans text-base text-navy/50">
-                Password Anda tidak pernah disimpan dalam teks biasa — tidak pernah.
+                Password Anda telah di-hash menggunakan Bcrypt sebelum disimpan dalam database.
               </p>
             </div>
 
-            {/* Bcrypt explanation card */}
+           {/* Bcrypt explanation card */}
             <div className="glass-card animate-fade-in-up delay-100 rounded-2xl p-6 shadow-soft-lg sm:p-8">
-              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-start">
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-stretch">
                 {/* Left: Explanation */}
-                <div className="space-y-5">
+                <div className="flex flex-col justify-between gap-4">
                   <div className="flex items-start gap-3">
                     <div className="mt-1 flex size-6 shrink-0 items-center justify-center rounded-full bg-mint/15">
                       <Check className="size-3.5 text-mint" strokeWidth={3} />
                     </div>
                     <p className="font-sans text-sm leading-relaxed text-navy/70 sm:text-base">
-                      Password <strong className="text-navy">tidak pernah disimpan dalam teks biasa</strong>. Sebaliknya, ia
-                      diubah melalui fungsi hash satu arah yang tidak dapat dibalikkan.
+                      Password <strong className="text-navy">tidak pernah disimpan dalam bentuk teks biasa</strong>.
+                      Sebaliknya, password diubah menjadi hash satu arah yang tidak dapat dikembalikan ke bentuk asli.
                     </p>
                   </div>
                   <div className="flex items-start gap-3">
@@ -457,8 +462,8 @@ export default function AboutPage() {
                       <Check className="size-3.5 text-mint" strokeWidth={3} />
                     </div>
                     <p className="font-sans text-sm leading-relaxed text-navy/70 sm:text-base">
-                      Bcrypt secara otomatis menambahkan <strong className="text-navy">salt</strong> — data acak yang
-                      ditambahkan sebelum hashing — untuk mencegah serangan rainbow table dan serangan kamus.
+                      Bcrypt secara otomatis menambahkan <strong className="text-navy">salt</strong> (data acak)
+                      sebelum hashing untuk mencegah serangan rainbow table dan kamus.
                     </p>
                   </div>
                   <div className="flex items-start gap-3">
@@ -466,8 +471,8 @@ export default function AboutPage() {
                       <Check className="size-3.5 text-mint" strokeWidth={3} />
                     </div>
                     <p className="font-sans text-sm leading-relaxed text-navy/70 sm:text-base">
-                      <strong className="text-navy">Faktor biaya adaptif</strong> membuat Bcrypt sengaja lebih lambat,
-                      yang membuat serangan brute force menjadi tidak praktis secara komputasi.
+                      <strong className="text-navy">Cost Factor</strong> membuat proses hashing
+                      lebih lambat secara sengaja, sehingga serangan brute force menjadi tidak efisien.
                     </p>
                   </div>
                   <div className="flex items-start gap-3">
@@ -475,29 +480,29 @@ export default function AboutPage() {
                       <Check className="size-3.5 text-mint" strokeWidth={3} />
                     </div>
                     <p className="font-sans text-sm leading-relaxed text-navy/70 sm:text-base">
-                      Bcrypt adalah <strong className="text-navy">standar industri</strong> untuk keamanan password,
-                      direkomendasikan oleh OWASP dan profesional keamanan di seluruh dunia.
+                      Bcrypt adalah <strong className="text-navy">standar industri</strong> untuk penyimpanan password,
+                      direkomendasikan oleh OWASP dan praktisi keamanan.
                     </p>
                   </div>
                 </div>
 
                 {/* Right: Visual representation */}
-                <div className="glass-card rounded-xl p-5 shadow-soft">
-                  <p className="mb-4 text-center font-heading text-xs font-semibold uppercase tracking-wider text-navy/40">
+                <div className="glass-card flex flex-col justify-between rounded-xl p-4 shadow-soft">
+                  <p className="mb-3 text-center font-heading text-xs font-semibold uppercase tracking-wider text-navy/40">
                     Cara Kerja Bcrypt
                   </p>
-                  <div className="flex flex-col items-center gap-3">
+                  <div className="flex flex-1 flex-col items-center justify-between gap-2">
                     {/* Password input */}
-                    <div className="w-full rounded-lg bg-navy/5 p-3">
+                    <div className="w-full rounded-lg bg-navy/5 p-2.5">
                       <p className="font-mono text-xs text-navy/60">myPassword123</p>
-                      <p className="mt-1 font-sans text-[11px] text-navy/40">Password teks biasa</p>
+                      <p className="mt-0.5 font-sans text-[11px] text-navy/40">Password teks biasa</p>
                     </div>
 
                     <ArrowRight className="size-4 rotate-90 text-navy/30" />
 
                     {/* Salt + Cost */}
-                    <div className="w-full space-y-2">
-                      <div className="flex items-center gap-2 rounded-lg bg-royal/5 p-3">
+                    <div className="w-full">
+                      <div className="flex items-center gap-2 rounded-lg bg-royal/5 p-2.5">
                         <Hash className="size-4 shrink-0 text-royal icon-pop" />
                         <div>
                           <p className="font-mono text-[11px] text-navy/60">$2b$12$randomsalt22chars</p>
@@ -509,16 +514,16 @@ export default function AboutPage() {
                     <ArrowRight className="size-4 rotate-90 text-mint" />
 
                     {/* Hash output */}
-                    <div className="w-full rounded-lg bg-mint/5 p-3">
+                    <div className="w-full rounded-lg bg-mint/5 p-2.5">
                       <p className="break-all font-mono text-[10px] text-navy/50">
                         $2b$12$randomsalt22charsOE9fWxJKv3gKXM8hHqP6uG5mZbNiKXW8eQvY2R
                       </p>
-                      <p className="mt-1 font-sans text-[11px] text-navy/40">Hash bcrypt yang tidak dapat dibalikkan, disimpan di database</p>
+                      <p className="mt-0.5 font-sans text-[11px] text-navy/40">Hash bcrypt yang tidak dapat dibalikkan, disimpan di database</p>
                     </div>
 
                     {/* Callout */}
-                    <div className="mt-2 flex items-center gap-2 rounded-lg bg-mint/10 px-4 py-2.5">
-                      <Shield className="size-4 text-mint icon-pop" />
+                    <div className="flex w-full items-center gap-2 rounded-lg bg-mint/10 px-3 py-2">
+                      <Shield className="size-4 shrink-0 text-mint icon-pop" />
                       <p className="font-sans text-xs font-medium text-navy/70">
                         Tidak mungkin dikembalikan ke password asli
                       </p>
@@ -531,7 +536,7 @@ export default function AboutPage() {
         </section>
 
         {/* ═══════════════════ HOW SECRETINK WORKS ═══════════════════ */}
-        <section className="relative px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+        <section className="relative px-4 py-16 sm:px-6 sm:py-18 lg:px-8">
           <div className="mx-auto max-w-6xl">
             {/* Section heading */}
             <div className="animate-fade-in-up mb-14 text-center sm:mb-16">
@@ -546,67 +551,86 @@ export default function AboutPage() {
               </p>
             </div>
 
-            {/* Timeline */}
+           {/* Timeline */}
             <div className="relative">
-              {/* Vertical connecting line */}
-              <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-royal/20 via-royal/10 to-mint/20 md:left-1/2 md:-translate-x-px" />
+              <div className="absolute bottom-0 left-6 top-0 w-px bg-gradient-to-b from-royal/20 via-royal/10 to-mint/20 md:left-1/2 md:-translate-x-px" />
 
-              <div className="space-y-8">
+              <div className="space-y-6">
                 {howItWorksSteps.map((step, index) => {
                   const Icon = step.icon;
                   const isLeft = index % 2 === 0;
+                  const isMint = index % 2 !== 0;
+                  const colorBg    = isMint ? 'bg-mint'   : 'bg-royal';
+                  const colorText  = isMint ? 'text-mint'  : 'text-royal';
+                  const colorIcon  = isMint ? 'bg-mint/10' : 'bg-royal/10';
+                  
+                  const colorHover = isMint
+                    ? 'hover:shadow-[0_12px_30px_-4px_rgba(52,211,153,0.15)] hover:border-mint/40 group-hover:border-mint/40'
+                    : 'hover:shadow-[0_12px_30px_-4px_rgba(107,127,215,0.15)] hover:border-royal/40 group-hover:border-royal/40';
 
                   return (
                     <div
                       key={step.number}
-                      className={`animate-fade-in-up delay-${(index + 1) * 100} relative flex items-start gap-6 md:gap-0 ${
-                        isLeft ? 'md:flex-row' : 'md:flex-row-reverse'
-                      }`}
+                      className="animate-fade-in-up relative flex items-start md:grid md:grid-cols-[1fr_32px_1fr] md:items-start md:gap-0 group"
+                      style={{ animationDelay: `${(index + 1) * 150}ms`, animationFillMode: 'both' }}
                     >
-                      {/* Content card */}
-                      <div className={`flex-1 pl-14 md:pl-0 ${isLeft ? 'md:pr-12 md:text-right' : 'md:pl-12 md:text-left'}`}>
-                        <div className="glass-card rounded-2xl p-5 shadow-soft transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-0.5 sm:p-6">
-                          <div className={`flex items-center gap-3 ${isLeft ? 'md:justify-end' : 'md:justify-start'}`}>
-                            <div className={`flex size-10 items-center justify-center rounded-xl ${step.color === 'bg-mint' ? 'bg-mint/10' : 'bg-royal/10'}`}>
-                              <Icon className={`size-5 icon-pop ${step.color === 'bg-mint' ? 'text-mint' : 'text-royal'}`} strokeWidth={2} />
+                      {/* Left slot */}
+                      <div className={`${isLeft ? 'pl-10 md:pl-0 md:pr-6' : 'hidden md:block'}`}>
+                        {isLeft && (
+                          <div className={`glass-card rounded-xl p-4 shadow-soft border border-navy/5 transform transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-1.5 ${colorHover}`}>
+                            <div className="mb-2 flex items-center justify-end gap-2.5">
+                              <h3 className="font-heading text-sm font-semibold text-navy transition-colors duration-300 group-hover:text-royal">{step.title}</h3>
+                              <div className={`flex size-8 shrink-0 items-center justify-center rounded-lg ${colorIcon} transition-all duration-500 ease-out group-hover:bg-royal group-hover:scale-110`}>
+                                <Icon className={`size-4 ${colorText} transition-colors duration-500 group-hover:text-white`} strokeWidth={2} />
+                              </div>
                             </div>
-                            <h3 className="font-heading text-base font-semibold text-navy sm:text-lg">
-                              {step.title}
-                            </h3>
+                            <p className="text-right font-sans text-xs leading-relaxed text-navy/50 transition-colors duration-300 group-hover:text-navy/70">{step.description}</p>
                           </div>
-                          <p className="mt-3 font-sans text-sm leading-relaxed text-navy/50">
-                            {step.description}
-                          </p>
+                        )}
+                      </div>
+
+                      <div className="relative flex justify-center">
+                        <div className="absolute left-6 top-4 md:static md:left-auto md:top-auto md:mt-3.5">
+                          <div className={`flex size-6 items-center justify-center rounded-full shadow-[0_0_0_4px_white] transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:scale-125 ${colorBg}`}>
+                            <span className="font-heading text-xs font-bold leading-none text-white">
+                              {step.number}
+                            </span>
+                          </div>
                         </div>
                       </div>
 
-                      {/* Timeline node */}
-                      <div className="absolute left-6 md:left-1/2 md:-translate-x-1/2 z-10 flex size-5 -translate-x-1/2 items-center justify-center">
-                        <div className={`size-5 rounded-full ${step.color} flex items-center justify-center shadow-royal`}>
-                          <span className="text-[10px] font-bold text-white">{step.number}</span>
-                        </div>
+                      {/* Right slot */}
+                      <div className={`${!isLeft ? 'pl-10 md:pl-6 md:pr-0' : 'hidden md:block'}`}>
+                        {!isLeft && (
+                          <div className={`glass-card rounded-xl p-4 shadow-soft border border-navy/5 transform transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-1.5 ${colorHover}`}>
+                            <div className="mb-2 flex items-center gap-2.5">
+                              <div className={`flex size-8 shrink-0 items-center justify-center rounded-lg ${colorIcon} transition-all duration-500 ease-out group-hover:bg-mint group-hover:scale-110`}>
+                                <Icon className={`size-4 ${colorText} transition-colors duration-500 group-hover:text-white`} strokeWidth={2} />
+                              </div>
+                              <h3 className="font-heading text-sm font-semibold text-navy transition-colors duration-300 group-hover:text-mint">{step.title}</h3>
+                            </div>
+                            <p className="font-sans text-xs leading-relaxed text-navy/50 transition-colors duration-300 group-hover:text-navy/70">{step.description}</p>
+                          </div>
+                        )}
                       </div>
-
-                      {/* Empty space for the other side on desktop */}
-                      <div className="hidden flex-1 md:block" />
                     </div>
                   );
                 })}
               </div>
 
               {/* Emphasis callout */}
-              <div className="animate-fade-in-up delay-700 mt-12">
-                <div className="glass-card mx-auto max-w-2xl rounded-2xl p-5 shadow-soft-lg sm:p-6">
+              <div className="animate-fade-in-up mt-10" style={{ animationDelay: '700ms', animationFillMode: 'both' }}>
+                <div className="glass-card group mx-auto max-w-xl rounded-xl border border-navy/5 border-l-2 border-l-mint/40 p-4 shadow-soft-lg transform transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-1 hover:border-l-mint/70 hover:border-mint/20 hover:shadow-[0_12px_30px_-4px_rgba(52,211,153,0.12)]">
                   <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:text-left">
-                    <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-mint/10">
-                      <EyeOff className="size-6 text-mint icon-pop" strokeWidth={2} />
+                    <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-mint/10 transition-all duration-500 ease-out group-hover:bg-mint group-hover:scale-110">
+                      <EyeOff className="size-4 text-mint transition-colors duration-500 group-hover:text-white" strokeWidth={2} />
                     </div>
                     <div>
-                      <p className="font-heading text-base font-bold text-navy sm:text-lg">
-                        Kunci enkripsi Anda <span className="text-mint">TIDAK PERNAH</span> dikirim ke server kami untuk disimpan
+                      <p className="font-heading text-sm font-bold text-navy">
+                        Sistem kami menerapkan <span className="text-mint">ZERO-KNOWLEDGE</span>, kunci tidak pernah dikirim ke server
                       </p>
-                      <p className="mt-1 font-sans text-sm text-navy/50">
-                        Kami tidak dapat mendekripsi catatan Anda — bahkan jika kami mau. Hanya Anda yang memegang kunci.
+                      <p className="mt-0.5 font-sans text-xs text-navy/50 transition-colors duration-300 group-hover:text-navy/70">
+                        Secara sistem, kami tidak memiliki kemampuan untuk memulihkan atau membaca catatan Anda. Kendali penuh ada di tangan Anda.
                       </p>
                     </div>
                   </div>
@@ -617,7 +641,7 @@ export default function AboutPage() {
         </section>
 
         {/* ═══════════════════ SECURITY FEATURES ═══════════════════ */}
-        <section className="relative px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+        <section className="relative px-4 py-12 sm:px-6 sm:py-14 lg:px-8">
           <div className="mx-auto max-w-6xl">
             {/* Section heading */}
             <div className="animate-fade-in-up mb-14 text-center sm:mb-16">
@@ -628,37 +652,40 @@ export default function AboutPage() {
                 Langkah Keamanan <span className="gradient-text-royal">Kami</span>
               </h2>
               <p className="mx-auto mt-4 max-w-xl font-sans text-base text-navy/50">
-                Berbagai lapisan perlindungan memastikan data Anda tetap aman di setiap level.
+                Berbagai lapisan perlindungan memastikan data Anda tetap aman.
               </p>
             </div>
 
             {/* Features grid */}
-            <div className="animate-fade-in-up delay-100 grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="animate-fade-in-up grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 [animation-delay:100ms]">
               {securityFeatures.map((feature, index) => {
                 const Icon = feature.icon;
                 return (
                   <div
                     key={feature.title}
-                    className={`glass-card rounded-2xl p-6 shadow-soft transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-1 sm:p-6 animate-fade-in-up delay-${(index + 1) * 100}`}
+                    className="group glass-card rounded-2xl p-6 shadow-soft border border-navy/5 transform transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:shadow-soft-lg hover:-translate-y-2 hover:bg-white/80 hover:ring-1 hover:ring-royal/20 sm:p-6 animate-fade-in-up"
+                    style={{ animationDelay: `${(index + 1) * 150}ms`, animationFillMode: 'both' }}
                   >
-                    <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-royal/10">
-                      <Icon className="size-5 text-royal icon-pop" strokeWidth={2} />
+                    <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-royal/10 transition-all duration-500 ease-out group-hover:bg-royal group-hover:scale-110 group-hover:rotate-3">
+                      <Icon className="size-5 text-royal transition-all duration-500 ease-out group-hover:text-white" strokeWidth={2} />
                     </div>
-                    <h3 className="font-heading text-base font-semibold text-navy sm:text-lg">
+                    
+                    <h3 className="font-heading text-base font-semibold text-navy transition-colors duration-300 group-hover:text-royal sm:text-lg">
                       {feature.title}
                     </h3>
-                    <p className="mt-2 font-sans text-sm leading-relaxed text-navy/50">
+                    
+                    <p className="mt-2 font-sans text-sm leading-relaxed text-navy/50 transition-colors duration-300 group-hover:text-navy/70">
                       {feature.description}
                     </p>
                   </div>
                 );
               })}
-            </div>
+              </div>
           </div>
         </section>
 
         {/* ═══════════════════ ZERO KNOWLEDGE ARCHITECTURE ═══════════════════ */}
-        <section className="relative px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+        <section className="relative px-4 py-16 sm:px-6 sm:py-18 lg:px-8">
           <div className="mx-auto max-w-4xl">
             {/* Section heading */}
             <div className="animate-fade-in-up mb-14 text-center sm:mb-16">
@@ -669,25 +696,26 @@ export default function AboutPage() {
                 Filosofi <span className="gradient-text-royal">Zero Knowledge</span>
               </h2>
               <p className="mx-auto mt-4 max-w-xl font-sans text-base text-navy/50">
-                Privasi sejati melalui matematika, bukan sekadar janji.
+                Privasi berbasis enkripsi, bukan kepercayaan.
               </p>
             </div>
 
             {/* Zero knowledge explanation card */}
             <div className="glass-card animate-fade-in-up delay-100 rounded-2xl p-6 shadow-soft-lg sm:p-8">
               <div className="space-y-6">
+
                 <div className="flex items-start gap-4">
                   <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-mint/15">
                     <EyeOff className="size-4 text-mint icon-pop" strokeWidth={2.5} />
                   </div>
                   <div>
                     <h4 className="font-heading text-base font-semibold text-navy sm:text-lg">
-                      Kami tidak pernah bisa membaca catatan terenkripsi Anda
+                      Catatan terenkripsi sebelum meninggalkan perangkat Anda
                     </h4>
                     <p className="mt-1 font-sans text-sm leading-relaxed text-navy/50">
-                      Catatan Anda dienkripsi di sisi klien sebelum mencapai server kami. Kami hanya pernah melihat
-                      teks sandi — karakter yang tampak acak yang secara matematika tidak mungkin didekodekan tanpa
-                      kunci Anda.
+                      Enkripsi terjadi di sisi klien, di browser Anda, sebelum data dikirim ke server.
+                      Yang kami terima dan simpan hanya ciphertext — data yang tidak dapat dibaca
+                      tanpa kunci enkripsi Anda.
                     </p>
                   </div>
                 </div>
@@ -700,11 +728,12 @@ export default function AboutPage() {
                   </div>
                   <div>
                     <h4 className="font-heading text-base font-semibold text-navy sm:text-lg">
-                      Kunci enkripsi Anda tetap bersama Anda
+                      Kunci enkripsi tidak pernah dikirim ke server kami
                     </h4>
                     <p className="mt-1 font-sans text-sm leading-relaxed text-navy/50">
-                      Kunci enkripsi Anda tidak pernah ditransmisikan ke server kami, tidak pernah disimpan di database kami,
-                      dan tidak pernah dicatat di mana pun. Kunci itu hanya ada di sesi browser dan ingatan Anda.
+                      Kunci enkripsi Anda hanya ada di sesi browser Anda. Kami tidak menyimpan,
+                      mencatat, atau mentransmisikannya ke mana pun — sehingga kami tidak memiliki
+                      akses untuk mendekripsi catatan Anda.
                     </p>
                   </div>
                 </div>
@@ -717,12 +746,12 @@ export default function AboutPage() {
                   </div>
                   <div>
                     <h4 className="font-heading text-base font-semibold text-navy sm:text-lg">
-                      Bahkan jika database kami dikompromikan, catatan Anda tetap terenkripsi
+                      Kebocoran database tidak mengekspos isi catatan Anda
                     </h4>
                     <p className="mt-1 font-sans text-sm leading-relaxed text-navy/50">
-                      Jika terjadi pelanggaran data, penyerang hanya akan menemukan teks sandi terenkripsi AES-256. Tanpa
-                      kunci enkripsi pribadi Anda, data tersebut sama sekali tidak berguna — dilindungi oleh matematika yang
-                      akan memakan miliaran tahun untuk dipecahkan.
+                      Jika database kami diakses pihak tidak berwenang, yang mereka dapatkan hanya
+                      ciphertext AES-256. Tanpa kunci Anda, data tersebut tidak dapat didekripsi
+                      dengan teknologi komputasi yang ada saat ini.
                     </p>
                   </div>
                 </div>
@@ -735,12 +764,12 @@ export default function AboutPage() {
                   </div>
                   <div>
                     <h4 className="font-heading text-base font-semibold text-navy sm:text-lg">
-                      Privasi sejati melalui matematika, bukan sekadar janji
+                      Keamanan berbasis algoritma yang dapat diverifikasi
                     </h4>
                     <p className="mt-1 font-sans text-sm leading-relaxed text-navy/50">
-                      Kami tidak meminta Anda untuk mempercayai kami — kami meminta Anda mempercayai matematika. Algoritma
-                      AES-256 bersifat terbuka, telah ditinjau sejawat, dan terbukti. Privasi Anda dijamin oleh hukum
-                      kompleksitas komputasi, bukan oleh kebijakan perusahaan.
+                      AES-256 adalah standar enkripsi terbuka yang telah diaudit secara luas dan
+                      digunakan oleh institusi keuangan serta pemerintahan. Privasi Anda bergantung
+                      pada properti matematis algoritma ini, bukan pada kebijakan layanan kami.
                     </p>
                   </div>
                 </div>
@@ -757,7 +786,8 @@ export default function AboutPage() {
                       Data Anda. Kunci Anda. Kendali Anda.
                     </p>
                     <p className="mt-1 font-sans text-sm text-navy/50">
-                      Zero knowledge berarti tanpa kompromi. Kami membangun SecretInk sehingga bahkan kami tidak dapat mengakses rahasia Anda.
+                      Arsitektur zero knowledge memastikan bahwa akses ke catatan Anda
+                      hanya dapat dilakukan oleh pemegang kunci enkripsi — yaitu Anda.
                     </p>
                   </div>
                 </div>
