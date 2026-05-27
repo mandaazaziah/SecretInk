@@ -273,28 +273,28 @@ export default function NotesPage() {
     switch (statusState) {
       case 'Terenkripsi':
         return (
-          <Badge className="bg-royal/10 text-royal border-royal/20 hover:bg-royal/20 gap-1.5">
+          <Badge className="bg-royal/10 text-royal border-royal/20 hover:bg-royal/20 gap-1.5 cursor-default">
             <Lock className="size-3" />
             Terenkripsi
           </Badge>
         );
       case 'Terdekripsi':
         return (
-          <Badge className="bg-mint/10 text-mint border-mint/20 hover:bg-mint/20 gap-1.5">
+          <Badge className="bg-mint/10 text-mint border-mint/20 hover:bg-mint/20 gap-1.5 cursor-default">
             <Unlock className="size-3" />
             Terdekripsi
           </Badge>
         );
       case 'Tersimpan':
         return (
-          <Badge className="bg-mint/10 text-mint border-mint/20 hover:bg-mint/20 gap-1.5">
+          <Badge className="bg-mint/10 text-mint border-mint/20 hover:bg-mint/20 gap-1.5 cursor-default">
             <Check className="size-3" />
             Tersimpan
           </Badge>
         );
       default:
         return (
-          <Badge variant="outline" className="text-muted-foreground gap-1.5">
+          <Badge variant="outline" className="text-muted-foreground gap-1.5 cursor-default">
             <FileText className="size-3" />
             Siap
           </Badge>
@@ -312,7 +312,7 @@ export default function NotesPage() {
     };
 
     return (
-      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+      <div className="flex items-center gap-2 text-sm text-muted-foreground cursor-default">
         <span
           className={cn(
             'size-2 rounded-full transition-colors duration-300',
@@ -353,26 +353,15 @@ export default function NotesPage() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Simple Top Bar */}
-      <header className="sticky top-0 z-50 glass-strong border-b border-border/50">
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-border/50">
         <div className="mx-auto max-w-6xl flex items-center justify-between px-4 sm:px-6 lg:px-8 h-14">
-          <Link href="/dashboard" className="flex items-center gap-2 group">
+          <Link href="/dashboard" className="flex items-center gap-2 group cursor-pointer">
             <img src="/logo.svg" alt="SecretInk" className="h-7 logo-zoom" />
             <span className="text-lg font-bold font-[family-name:var(--font-poppins)]">
               <span className="text-navy group-hover:text-royal transition-colors">Secret</span>
               <span className="text-royal group-hover:text-royal-light transition-colors">Ink</span>
             </span>
           </Link>
-          <Button
-            variant="outline"
-            size="sm"
-            asChild
-            className="gap-2 border-royal/20 text-royal hover:bg-royal/5 hover:text-royal"
-          >
-            <Link href="/dashboard">
-              <ArrowLeft className="size-4 icon-pop" />
-              Kembali ke Dashboard
-            </Link>
-          </Button>
         </div>
       </header>
 
@@ -387,23 +376,33 @@ export default function NotesPage() {
         <div className="mx-auto max-w-6xl">
           {/* Page Header */}
           <div className="mb-8 animate-fade-in-up">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="flex items-center justify-center size-10 rounded-xl bg-accent">
-                <img src="/logo.svg" alt="SecretInk Logo" className="size-5 logo-zoom" />
-              </div>
+            <div className="flex flex-wrap items-center gap-4 mb-2">
+              <Button
+                variant="outline"
+                size="sm"
+                asChild
+                className="gap-2 border-royal/20 text-royal hover:bg-royal/5 hover:text-royal shrink-0 cursor-pointer"
+              >
+                <Link href="/dashboard">
+                  <ArrowLeft className="size-4 icon-pop" />
+                  Kembali
+                </Link>
+              </Button>
+              
               <h1
                 className={cn(
-                  'text-2xl sm:text-3xl font-bold tracking-tight text-navy',
+                  'text-2xl sm:text-3xl font-bold tracking-tight text-navy cursor-default',
                   'font-[family-name:var(--font-poppins)]'
                 )}
               >
                 {isEditMode ? 'Edit Catatan' : 'Catatan Rahasia'}
               </h1>
             </div>
-            <p className="text-muted-foreground text-sm sm:text-base ml-[52px]">
+            
+            <p className="text-muted-foreground text-sm sm:text-base mt-1 cursor-default">
               {isEditMode
                 ? 'Dekripsi catatan Anda, ubah isinya, enkripsi ulang, lalu simpan'
-                : 'Buat, enkripsi, dan kelola catatan aman Anda dengan enkripsi standar militer'}
+                : 'Buat, enkripsi, dan kelola catatan aman Anda'}
             </p>
           </div>
 
@@ -419,7 +418,7 @@ export default function NotesPage() {
             >
               <h2
                 className={cn(
-                  'text-lg font-semibold text-navy mb-5',
+                  'text-lg font-semibold text-navy mb-5 cursor-default',
                   'font-[family-name:var(--font-poppins)]'
                 )}
               >
@@ -429,7 +428,7 @@ export default function NotesPage() {
               <div className="space-y-4">
                 {/* Title Input */}
                 <div className="space-y-1.5">
-                  <label htmlFor="note-title" className="text-sm font-medium text-navy">
+                  <label htmlFor="note-title" className="text-sm font-medium text-navy cursor-default">
                     Judul
                   </label>
                   <div className="relative input-royal rounded-md">
@@ -457,7 +456,7 @@ export default function NotesPage() {
 
                 {/* Secret Note Textarea */}
                 <div className="space-y-1.5">
-                  <label htmlFor="note-content" className="text-sm font-medium text-navy">
+                  <label htmlFor="note-content" className="text-sm font-medium text-navy cursor-default">
                     Catatan Rahasia
                   </label>
                   <div className="relative input-royal rounded-md">
@@ -489,7 +488,7 @@ export default function NotesPage() {
 
                 {/* Encryption Key Input */}
                 <div className="space-y-1.5">
-                  <label htmlFor="encryption-key" className="text-sm font-medium text-navy">
+                  <label htmlFor="encryption-key" className="text-sm font-medium text-navy cursor-default">
                     Kunci Enkripsi
                   </label>
                   <div className="relative input-royal rounded-md">
@@ -512,7 +511,7 @@ export default function NotesPage() {
                     <button
                       type="button"
                       onClick={() => setShowKey(!showKey)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-navy transition-colors"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-navy transition-colors cursor-pointer"
                       aria-label={showKey ? 'Sembunyikan kunci enkripsi' : 'Tampilkan kunci enkripsi'}
                     >
                       {showKey ? (
@@ -534,7 +533,7 @@ export default function NotesPage() {
                     onClick={handleEncrypt}
                     disabled={isEncrypting}
                     className={cn(
-                      'btn-royal rounded-lg h-10 text-sm font-semibold',
+                      'btn-royal rounded-lg h-10 text-sm font-semibold cursor-pointer',
                       'font-[family-name:var(--font-poppins)]',
                       'disabled:opacity-70 disabled:cursor-not-allowed'
                     )}
@@ -558,7 +557,7 @@ export default function NotesPage() {
                     disabled={isDecrypting}
                     variant="outline"
                     className={cn(
-                      'rounded-lg h-10 text-sm font-semibold',
+                      'rounded-lg h-10 text-sm font-semibold cursor-pointer',
                       'border-royal/30 text-royal hover:bg-royal/5 hover:text-royal',
                       'font-[family-name:var(--font-poppins)]',
                       'disabled:opacity-70 disabled:cursor-not-allowed'
@@ -582,7 +581,7 @@ export default function NotesPage() {
                     onClick={handleSave}
                     disabled={isSaving}
                     className={cn(
-                      'btn-mint rounded-lg h-10 text-sm font-semibold',
+                      'btn-mint rounded-lg h-10 text-sm font-semibold cursor-pointer',
                       'font-[family-name:var(--font-poppins)]',
                       'disabled:opacity-70 disabled:cursor-not-allowed'
                     )}
@@ -605,7 +604,7 @@ export default function NotesPage() {
                     onClick={handleCopy}
                     variant="outline"
                     className={cn(
-                      'rounded-lg h-10 text-sm font-medium',
+                      'rounded-lg h-10 text-sm font-medium cursor-pointer',
                       'font-[family-name:var(--font-poppins)]'
                     )}
                   >
@@ -618,7 +617,7 @@ export default function NotesPage() {
                     onClick={handleClear}
                     variant="outline"
                     className={cn(
-                      'rounded-lg h-10 text-sm font-medium',
+                      'rounded-lg h-10 text-sm font-medium cursor-pointer',
                       'border-destructive/30 text-destructive hover:bg-destructive/5 hover:text-destructive',
                       'font-[family-name:var(--font-poppins)]'
                     )}
@@ -654,7 +653,7 @@ export default function NotesPage() {
               <div className="flex items-center justify-between mb-5">
                 <h2
                   className={cn(
-                    'text-lg font-semibold text-navy',
+                    'text-lg font-semibold text-navy cursor-default',
                     'font-[family-name:var(--font-poppins)]'
                   )}
                 >
@@ -689,7 +688,7 @@ export default function NotesPage() {
                       {result}
                     </pre>
                   ) : (
-                    <div className="flex flex-col items-center justify-center py-16 text-center">
+                    <div className="flex flex-col items-center justify-center py-16 text-center cursor-default">
                       <div className="flex items-center justify-center size-16 rounded-2xl bg-accent/50 mb-4">
                         <Lock className="size-7 text-muted-foreground/50" />
                       </div>
@@ -710,7 +709,7 @@ export default function NotesPage() {
                     size="sm"
                     variant="outline"
                     className={cn(
-                      'absolute top-3 right-3 gap-1.5',
+                      'absolute top-3 right-3 gap-1.5 cursor-pointer',
                       'bg-white/80 backdrop-blur-sm',
                       'border-border/60 shadow-soft',
                       'hover:bg-white transition-all duration-200',
@@ -727,7 +726,7 @@ export default function NotesPage() {
               {result && (
                 <div
                   className={cn(
-                    'mt-4 flex items-center gap-4 text-xs text-muted-foreground',
+                    'mt-4 flex items-center gap-4 text-xs text-muted-foreground cursor-default',
                     'animate-fade-in'
                   )}
                 >
@@ -746,7 +745,7 @@ export default function NotesPage() {
 
               {/* Edit mode hint */}
               {isEditMode && result && statusState === 'Tersimpan' && (
-                <div className="mt-4 rounded-lg bg-royal/5 border border-royal/20 p-3">
+                <div className="mt-4 rounded-lg bg-royal/5 border border-royal/20 p-3 cursor-default">
                   <p className="text-xs text-royal font-medium">
                     💡 Cara edit: Masukkan <strong>Kunci Enkripsi</strong> Anda  → Klik <strong>Dekripsi</strong> → Edit isi catatan → klik <strong>Enkripsi</strong> → klik <strong>Perbarui</strong>
                   </p>

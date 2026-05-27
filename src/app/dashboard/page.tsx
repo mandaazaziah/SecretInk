@@ -39,7 +39,7 @@ import {
   X,
   Menu,
   LogOut,
-  User,
+  Timer,
 } from 'lucide-react';
 
 // ─── Types ──────────────────────────────────────────────────────────────────────
@@ -117,6 +117,9 @@ export default function DashboardPage() {
   const [decryptedContent, setDecryptedContent] = useState<string | null>(null);
   const [decrypting, setDecrypting] = useState(false);
   const [copied, setCopied] = useState(false);
+  
+  // Timer State untuk Sesi Dekripsi
+  const [decryptSessionTimer, setDecryptSessionTimer] = useState<number | null>(null);
 
   // Delete confirmation dialog
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -130,6 +133,24 @@ export default function DashboardPage() {
     }
   }, [status, router]);
 
+  // ─── Timer Countdown Effect ────────────────────────────────────────────────
+  useEffect(() => {
+    if (decryptSessionTimer === null) return;
+
+    if (decryptSessionTimer > 0) {
+      const timer = setTimeout(() => {
+        setDecryptSessionTimer(decryptSessionTimer - 1);
+      }, 1000);
+      return () => clearTimeout(timer);
+    } else {
+      // Waktu Habis (0 detik)
+      setDecryptedContent(null);
+      setEncryptionKey('');
+      setDecryptSessionTimer(null);
+      toast.info('Sesi waktu habis, silakan masukkan kunci kembali.');
+    }
+  }, [decryptSessionTimer]);
+
   // ─── Fetch notes on mount ──────────────────────────────────────────────────
   const fetchNotes = useCallback(async () => {
     try {
@@ -139,7 +160,7 @@ export default function DashboardPage() {
         const data = await res.json();
         setNotes(data.notes || []);
       } else {
-        toast.error('Gagal memuat catatan');
+        toast.error('Gagal memuat daftar catatan');
       }
     } catch {
       toast.error('Kesalahan jaringan. Silakan coba lagi.');
@@ -160,12 +181,13 @@ export default function DashboardPage() {
       setNoteLoading(true);
       setDecryptedContent(null);
       setEncryptionKey('');
+      setDecryptSessionTimer(null); // Reset timer jika membuka note lain
       const res = await fetch(`/api/notes/${id}`);
       if (res.ok) {
         const data = await res.json();
         setSelectedNote(data.note);
       } else {
-        toast.error('Gagal memuat catatan');
+        toast.error('Gagal memuat detail catatan');
         setSelectedNote(null);
       }
     } catch {
@@ -186,7 +208,7 @@ export default function DashboardPage() {
   // ─── Decrypt handler ───────────────────────────────────────────────────────
   const handleDecrypt = async () => {
     if (!selectedNote || !encryptionKey.trim()) {
-      toast.error('Masukkan kunci enkripsi Anda');
+      toast.error('Masukkan kunci enkripsi Anda terlebih dahulu');
       return;
     }
 
@@ -205,14 +227,17 @@ export default function DashboardPage() {
 
       if (res.ok) {
         setDecryptedContent(data.decrypted);
+        setDecryptSessionTimer(5); // Mulai sesi 5 detik
         toast.success('Catatan berhasil didekripsi!');
       } else {
-        toast.error(data.error || 'Dekripsi gagal');
+        toast.error('Kunci enkripsi yang Anda masukkan salah. Silakan coba lagi.');
         setDecryptedContent(null);
+        setDecryptSessionTimer(null);
       }
     } catch {
-      toast.error('Kesalahan jaringan. Silakan coba lagi.');
+      toast.error('Terjadi kesalahan jaringan saat mendekripsi.');
       setDecryptedContent(null);
+      setDecryptSessionTimer(null);
     } finally {
       setDecrypting(false);
     }
@@ -241,12 +266,13 @@ export default function DashboardPage() {
           setSelectedNoteId(null);
           setSelectedNote(null);
           setDecryptedContent(null);
+          setDecryptSessionTimer(null);
         }
       } else {
         toast.error('Gagal menghapus catatan');
       }
     } catch {
-      toast.error('Kesalahan jaringan. Silakan coba lagi.');
+      toast.error('Kesalahan jaringan saat menghapus catatan.');
     } finally {
       setDeleting(false);
       setDeleteDialogOpen(false);
@@ -319,7 +345,7 @@ export default function DashboardPage() {
           <div className="flex items-center gap-2.5 border-b border-border/50 px-5 py-4">
             <img src="/logo.svg" alt="SecretInk" className="h-7 logo-zoom" />
             <span
-              className="text-lg font-bold tracking-tight"
+              className="text-lg font-bold tracking-tight cursor-default"
               style={{ fontFamily: 'Poppins, sans-serif' }}
             >
               <span className="text-navy">Secret</span><span className="text-royal">Ink</span>
@@ -330,18 +356,12 @@ export default function DashboardPage() {
             {/* Sidebar Title */}
             <div className="mb-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <h2 className="font-heading text-lg font-bold text-navy">Catatan Saya</h2>
-                <Badge
-                  variant="secondary"
-                  className="bg-royal/10 text-royal text-xs font-semibold"
-                >
-                  {totalNotes}
-                </Badge>
+                <h2 className="font-heading text-lg font-bold text-navy cursor-default">Catatan Saya</h2>
               </div>
             </div>
 
             {/* New Note Button */}
-            <Button asChild className="btn-royal mb-4 w-full gap-2 shadow-royal">
+            <Button asChild className="btn-royal mb-4 w-full gap-2 shadow-royal cursor-pointer">
               <Link href="/notes">
                 <Plus className="size-4 icon-pop" />
                 Catatan Baru
@@ -360,7 +380,7 @@ export default function DashboardPage() {
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-navy"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-navy cursor-pointer"
                   aria-label="Hapus pencarian"
                 >
                   <X className="size-3.5 icon-pop" />
@@ -379,7 +399,7 @@ export default function DashboardPage() {
                     </div>
                   ))
                 ) : filteredNotes.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center py-12 text-center">
+                  <div className="flex flex-col items-center justify-center py-12 text-center cursor-default">
                     <div className="mb-3 flex size-14 items-center justify-center rounded-2xl bg-royal/10">
                       <StickyNote className="size-7 text-royal icon-pop" strokeWidth={1.8} />
                     </div>
@@ -387,7 +407,7 @@ export default function DashboardPage() {
                     <p className="mt-1 text-xs text-muted-foreground">
                       Buat catatan pertama Anda!
                     </p>
-                    <Button asChild className="btn-royal mt-3 gap-1.5 text-xs" size="sm">
+                    <Button asChild className="btn-royal mt-3 gap-1.5 text-xs cursor-pointer" size="sm">
                       <Link href="/notes">
                         <Plus className="size-3.5 icon-pop" />
                         Buat Catatan
@@ -400,10 +420,10 @@ export default function DashboardPage() {
                       key={note.id}
                       onClick={() => handleSelectNote(note.id)}
                       className={cn(
-                        'note-card group cursor-pointer rounded-lg p-3 transition-all duration-200',
+                        'note-card group cursor-pointer rounded-lg p-3 transition-all duration-200 border',
                         selectedNoteId === note.id
-                          ? 'border-l-royal bg-royal/5 border-l-[3px]'
-                          : 'hover:bg-royal/5'
+                          ? 'border-l-royal bg-royal/5 border-l-[3px] border-transparent'
+                          : 'border-transparent hover:bg-royal/5 hover:border-royal/50 hover:shadow-sm'
                       )}
                     >
                       <div className="flex items-start justify-between gap-2">
@@ -434,7 +454,7 @@ export default function DashboardPage() {
                         </div>
                         <button
                           onClick={(e) => handleDeleteClick(note, e)}
-                          className="shrink-0 rounded-md p-1 text-muted-foreground opacity-0 transition-all duration-200 hover:bg-destructive/10 hover:text-destructive group-hover:opacity-100"
+                          className="shrink-0 rounded-md p-1 text-muted-foreground opacity-0 transition-all duration-200 hover:bg-destructive/10 hover:text-destructive group-hover:opacity-100 cursor-pointer"
                           aria-label={`Hapus catatan: ${note.title}`}
                         >
                           <Trash2 className="size-3.5 icon-pop" />
@@ -457,7 +477,7 @@ export default function DashboardPage() {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden"
+              className="md:hidden cursor-pointer"
               onClick={() => setSidebarOpen(!sidebarOpen)}
               aria-label="Toggle sidebar"
             >
@@ -467,7 +487,7 @@ export default function DashboardPage() {
 
           {/* Right: User info */}
           <div className="flex items-center gap-3">
-            <Link href="/profile" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <Link href="/profile" className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer">
               <Avatar className="size-8 border border-border/50">
                 <AvatarImage
                   src={session.user?.image || undefined}
@@ -489,19 +509,8 @@ export default function DashboardPage() {
             <Button
               variant="ghost"
               size="sm"
-              asChild
-              className="text-muted-foreground hover:text-royal gap-1.5"
-            >
-              <Link href="/profile">
-                <User className="size-4 icon-pop" />
-                <span className="hidden sm:inline">Profil</span>
-              </Link>
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
               onClick={() => signOut({ callbackUrl: '/' })}
-              className="text-muted-foreground hover:text-destructive gap-1.5"
+              className="text-muted-foreground hover:text-destructive gap-1.5 cursor-pointer"
             >
               <LogOut className="size-4 icon-pop" />
               <span className="hidden sm:inline">Keluar</span>
@@ -511,11 +520,11 @@ export default function DashboardPage() {
 
         {/* ─── MAIN CONTENT ─────────────────────────────────────────────── */}
         <main className="flex-1 overflow-y-auto">
-          <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6 lg:px-8">
+          <div className="w-full px-4 py-6 sm:px-6 lg:px-8">
             {/* ═══════════ TOP STATS BAR ═══════════ */}
             <div className="animate-fade-in-up mb-6 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
               {/* Total Catatan */}
-              <div className="glass-card rounded-xl p-4 shadow-soft transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-0.5">
+              <div className="glass-card rounded-xl p-4 shadow-soft transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-0.5 cursor-default">
                 <div className="flex items-center gap-3">
                   <div className="flex size-10 items-center justify-center rounded-lg bg-royal/10">
                     <FileText className="size-5 text-royal icon-pop" />
@@ -528,7 +537,7 @@ export default function DashboardPage() {
               </div>
 
               {/* Terenkripsi */}
-              <div className="glass-card rounded-xl p-4 shadow-soft transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-0.5">
+              <div className="glass-card rounded-xl p-4 shadow-soft transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-0.5 cursor-default">
                 <div className="flex items-center gap-3">
                   <div className="flex size-10 items-center justify-center rounded-lg bg-mint/10">
                     <Lock className="size-5 text-mint icon-pop" />
@@ -541,7 +550,7 @@ export default function DashboardPage() {
               </div>
 
               {/* Aktivitas Terakhir */}
-              <div className="glass-card rounded-xl p-4 shadow-soft transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-0.5">
+              <div className="glass-card rounded-xl p-4 shadow-soft transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-0.5 cursor-default">
                 <div className="flex items-center gap-3">
                   <div className="flex size-10 items-center justify-center rounded-lg bg-royal/10">
                     <Clock className="size-5 text-royal icon-pop" />
@@ -556,7 +565,7 @@ export default function DashboardPage() {
               </div>
 
               {/* Level Keamanan */}
-              <div className="glass-card rounded-xl p-4 shadow-soft transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-0.5">
+              <div className="glass-card rounded-xl p-4 shadow-soft transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-0.5 cursor-default">
                 <div className="flex items-center gap-3">
                   <div className="flex size-10 items-center justify-center rounded-lg bg-royal/10">
                     <Shield className="size-5 text-royal icon-pop" />
@@ -582,7 +591,7 @@ export default function DashboardPage() {
                   </div>
                 ) : !selectedNoteId || !selectedNote ? (
                   // ─── Welcome Screen ─────────────────────────────────────────
-                  <div className="glass-card animate-fade-in-up flex flex-col items-center justify-center rounded-xl p-8 shadow-soft md:p-16">
+                  <div className="glass-card animate-fade-in-up flex flex-col items-center justify-center rounded-xl p-8 shadow-soft md:p-16 cursor-default">
                     <div
                       className="mb-6 flex size-20 items-center justify-center rounded-2xl"
                       style={{ backgroundColor: 'rgba(37, 99, 235, 0.1)' }}
@@ -605,8 +614,8 @@ export default function DashboardPage() {
                 ) : (
                   // ─── Note Detail View ────────────────────────────────────────
                   <div className="animate-fade-in-up space-y-4">
-                    {/* Note Header — tanpa tombol Edit */}
-                    <div className="glass-card rounded-xl p-6 shadow-soft">
+                    {/* Note Header */}
+                    <div className="glass-card rounded-xl p-6 shadow-soft cursor-default">
                       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center gap-2">
@@ -633,9 +642,10 @@ export default function DashboardPage() {
 
                     {/* Decrypt Section */}
                     <div className="glass-card rounded-xl p-6 shadow-soft">
-                      <h3 className="font-heading mb-4 flex items-center gap-2 text-base font-semibold text-navy">
+                      {/* Diperbarui: Teks "Dekripsi Catatan" diubah menjadi "Kunci Enkripsi" */}
+                      <h3 className="font-heading mb-4 flex items-center gap-2 text-base font-semibold text-navy cursor-default">
                         <KeyRound className="size-4 text-royal icon-pop" />
-                        Dekripsi Catatan
+                        Kunci Enkripsi
                       </h3>
 
                       <div className="space-y-3">
@@ -655,7 +665,7 @@ export default function DashboardPage() {
                           />
                           <button
                             onClick={() => setShowKey(!showKey)}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-navy transition-colors"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-navy transition-colors cursor-pointer"
                             aria-label={showKey ? 'Sembunyikan kunci' : 'Tampilkan kunci'}
                             type="button"
                           >
@@ -670,8 +680,8 @@ export default function DashboardPage() {
                         {/* Decrypt Button */}
                         <Button
                           onClick={handleDecrypt}
-                          disabled={decrypting || !encryptionKey.trim()}
-                          className="btn-royal w-full gap-2 shadow-royal"
+                          disabled={decrypting || !encryptionKey.trim() || decryptSessionTimer !== null}
+                          className="btn-royal w-full gap-2 shadow-royal cursor-pointer"
                         >
                           {decrypting ? (
                             <>
@@ -681,7 +691,7 @@ export default function DashboardPage() {
                           ) : (
                             <>
                               <Lock className="size-4 icon-pop" />
-                              Dekripsi Catatan
+                              {decryptSessionTimer !== null ? 'Sesi Sedang Berjalan' : 'Dekripsi Catatan'}
                             </>
                           )}
                         </Button>
@@ -690,19 +700,38 @@ export default function DashboardPage() {
 
                     {/* Decrypted Content Display */}
                     {decryptedContent !== null && (
-                      <div className="glass-card animate-fade-in-up rounded-xl p-6 shadow-soft">
-                        <div className="mb-4 flex items-center justify-between">
-                          <h3 className="font-heading flex items-center gap-2 text-base font-semibold text-navy">
+                      <div className="glass-card animate-fade-in-up rounded-xl p-6 shadow-soft relative overflow-hidden">
+                        {/* Sinkronisasi Garis Sesi Detik Menggunakan CSS Native Keyframes */}
+                        <style>{`
+                          @keyframes shrinkProgressBar {
+                            from { width: 100%; }
+                            to { width: 0%; }
+                          }
+                        `}</style>
+                        <div 
+                          className="absolute top-0 left-0 h-1 bg-red-500"
+                          style={{ 
+                            animation: 'shrinkProgressBar 5s linear forwards' 
+                          }} 
+                        />
+                        
+                        <div className="mb-4 flex items-center justify-between mt-1">
+                          <h3 className="font-heading flex items-center gap-2 text-base font-semibold text-navy cursor-default">
                             <Check className="size-4 text-mint icon-pop" />
                             Konten Terdekripsi
+                            {decryptSessionTimer !== null && (
+                              <span className="ml-2 flex items-center gap-1 px-2 py-0.5 rounded-md bg-red-100 text-red-600 text-xs font-bold animate-pulse">
+                                <Timer className="size-3" />
+                                {decryptSessionTimer}s
+                              </span>
+                            )}
                           </h3>
-                          {/* Tombol Salin + Edit berdampingan */}
                           <div className="flex items-center gap-2">
                             <Button
                               variant="outline"
                               size="sm"
                               onClick={handleCopy}
-                              className="gap-1.5"
+                              className="gap-1.5 cursor-pointer"
                             >
                               {copied ? (
                                 <>
@@ -720,7 +749,7 @@ export default function DashboardPage() {
                               asChild
                               variant="outline"
                               size="sm"
-                              className="gap-1.5"
+                              className="gap-1.5 cursor-pointer"
                             >
                               <Link href={`/notes?edit=${selectedNote.id}`}>
                                 <Edit3 className="size-3.5 icon-pop" />
@@ -729,7 +758,7 @@ export default function DashboardPage() {
                             </Button>
                           </div>
                         </div>
-                        <div className="rounded-lg bg-ice-dark p-4">
+                        <div className="rounded-lg bg-ice-dark p-4 cursor-text border border-red-500/20">
                           <pre className="whitespace-pre-wrap break-words font-sans text-sm leading-relaxed text-navy">
                             {decryptedContent}
                           </pre>
@@ -744,27 +773,39 @@ export default function DashboardPage() {
         </main>
       </div>
 
-      {/* ═══════════ DELETE CONFIRMATION DIALOG ═══════════ */}
+      {/* ═══════════ DIALOG KONFIRMASI HAPUS ═══════════ */}
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <DialogContent className="glass-card sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 font-heading text-navy">
-              <Trash2 className="size-5 text-destructive icon-pop" />
-              Hapus Catatan
-            </DialogTitle>
-            <DialogDescription>
-              Apakah Anda yakin ingin menghapus{' '}
+        <DialogContent className="p-0 overflow-hidden sm:max-w-md bg-white border-0 rounded-2xl shadow-xl [&>button]:hidden">
+          {/* Header Pop-up */}
+          <div className="bg-red-50/80 px-5 py-4 border-b border-red-100/80">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2 font-heading text-red-700 text-lg font-bold">
+                <div className="flex size-8 items-center justify-center rounded-md bg-red-500 text-white shadow-sm">
+                  <Trash2 className="size-4" />
+                </div>
+                Hapus Catatan
+              </DialogTitle>
+            </DialogHeader>
+          </div>
+
+          {/* Body Content */}
+          <div className="px-5 py-4">
+            <DialogDescription className="text-sm leading-relaxed text-slate-600">
+              Apakah Anda yakin ingin menghapus catatan{' '}
               <span className="font-semibold text-navy">
                 &ldquo;{noteToDelete?.title}&rdquo;
               </span>
-              ? Tindakan ini tidak dapat dibatalkan. Catatan terenkripsi akan dihapus secara permanen.
+              ? Tindakan ini tidak dapat dibatalkan. Catatan terenkripsi akan dihapus secara permanen dari brankas aman Anda.
             </DialogDescription>
-          </DialogHeader>
-          <DialogFooter className="gap-2 sm:gap-0">
+          </div>
+
+          {/* Footer Pop-up */}
+          <div className="bg-slate-50/80 px-5 py-3 flex flex-col-reverse sm:flex-row sm:justify-end gap-2 border-t border-slate-100">
             <Button
               variant="outline"
               onClick={() => setDeleteDialogOpen(false)}
               disabled={deleting}
+              className="cursor-pointer border-slate-200 text-slate-600 hover:bg-slate-100 hover:text-slate-900 h-9 text-sm"
             >
               Batal
             </Button>
@@ -772,7 +813,7 @@ export default function DashboardPage() {
               variant="destructive"
               onClick={confirmDelete}
               disabled={deleting}
-              className="gap-1.5"
+              className="gap-1.5 cursor-pointer bg-red-600 hover:bg-red-700 h-9 text-sm shadow-sm"
             >
               {deleting ? (
                 <>
@@ -781,12 +822,12 @@ export default function DashboardPage() {
                 </>
               ) : (
                 <>
-                  <Trash2 className="size-4 icon-pop" />
-                  Hapus
+                  <Trash2 className="size-4" />
+                  Hapus Permanen
                 </>
               )}
             </Button>
-          </DialogFooter>
+          </div>
         </DialogContent>
       </Dialog>
     </div>
