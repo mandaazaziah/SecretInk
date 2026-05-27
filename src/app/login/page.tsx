@@ -70,17 +70,18 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col relative overflow-hidden">
       <Navbar />
 
       {/* Animated Background */}
-      <div className="animated-bg">
+      <div className="animated-bg absolute inset-0 -z-10">
         <div className="floating-orb" />
         <div className="floating-orb" />
         <div className="floating-orb" />
       </div>
 
-      <main className="flex-1 flex items-center justify-center pt-24 px-4 sm:pt-28">
+      {/* Jarak pembungkus main disesuaikan (pt-28 pb-16 sm:pt-32) agar seimbang dengan register page */}
+      <main className="flex-1 flex flex-col items-center justify-center w-full px-4 pt-28 pb-16 sm:pt-32">
         <div
           className={cn(
             'w-full max-w-md animate-fade-in-up'
@@ -178,6 +179,7 @@ export default function LoginPage() {
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-navy transition-colors"
                     aria-label={showPassword ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi'}
                   >
+                    {/* Logika dikembalikan ke semula */}
                     {showPassword ? (
                       <EyeOff className="size-4 icon-pop" />
                     ) : (
@@ -230,7 +232,7 @@ export default function LoginPage() {
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="size-4 animate-spin" />
+                    <Loader2 className="size-4 animate-spin mr-2" />
                     Sedang masuk...
                   </>
                 ) : (

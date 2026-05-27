@@ -99,17 +99,18 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col relative overflow-hidden">
       <Navbar />
 
       {/* Animated Background */}
-      <div className="animated-bg">
+      <div className="animated-bg absolute inset-0 -z-10">
         <div className="floating-orb" />
         <div className="floating-orb" />
         <div className="floating-orb" />
       </div>
 
-      <main className="flex-1 flex items-center justify-center px-4 pt-24 pb-10 sm:pt-28">
+      {/* Penyesuaian jarak atas ke navbar (pt-28/sm:pt-32) dan bawah ke footer (pb-16) */}
+      <main className="flex-1 flex flex-col items-center justify-center w-full px-4 pt-28 pb-16 sm:pt-32">
         <div className="glass-card rounded-2xl p-8 w-full max-w-md shadow-soft-lg animate-fade-in-up">
           {/* Header */}
           <div className="flex flex-col items-center mb-8">
@@ -210,6 +211,7 @@ export default function RegisterPage() {
                   className="pr-3 text-muted-foreground hover:text-foreground transition-colors"
                   aria-label={showPassword ? "Sembunyikan kata sandi" : "Tampilkan kata sandi"}
                 >
+                  {/* Logika Icon Password Kembali Ke Kode Awal */}
                   {showPassword ? <EyeOff className="w-4 h-4 icon-pop" /> : <Eye className="w-4 h-4 icon-pop" />}
                 </button>
               </div>
@@ -268,6 +270,7 @@ export default function RegisterPage() {
                   className="pr-3 text-muted-foreground hover:text-foreground transition-colors"
                   aria-label={showConfirmPassword ? "Sembunyikan konfirmasi kata sandi" : "Tampilkan konfirmasi kata sandi"}
                 >
+                  {/* Logika Icon Confirm Password Kembali Ke Kode Awal */}
                   {showConfirmPassword ? <EyeOff className="w-4 h-4 icon-pop" /> : <Eye className="w-4 h-4 icon-pop" />}
                 </button>
               </div>
