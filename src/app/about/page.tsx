@@ -172,7 +172,7 @@ export default function AboutPage() {
             {/* Badge pill — hover lift */}
             <div className="animate-fade-in-up delay-0 mb-6 inline-flex items-center gap-2 rounded-full border border-royal/20 bg-royal/5 px-4 py-1.5 transition-all duration-300 hover:border-royal/40 hover:bg-royal/10 hover:scale-105 cursor-default">
               <Shield className="size-3.5 text-royal" strokeWidth={2.5} />
-              <span className="font-sans text-xs font-medium text-royal tracking-wide">Enkripsi Tingkat Militer</span>
+              <span className="font-sans text-xs font-medium text-royal tracking-wide">Enkripsi Tingkat Tinggi</span>
             </div>
 
             {/* Main heading — word-by-word shimmer on hover */}
