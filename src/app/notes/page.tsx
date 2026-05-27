@@ -248,10 +248,8 @@ export default function NotesPage() {
           : 'Catatan disimpan ke brankas Anda'
       );
 
-      // Kembali ke dashboard setelah update berhasil
-      if (isEditMode) {
-        setTimeout(() => router.push('/dashboard'), 1000);
-      }
+      // Kembali ke dashboard setelah simpan berhasil
+      setTimeout(() => router.push('/dashboard'), 1000);
     } catch {
       toast.error('Gagal menyimpan catatan. Silakan coba lagi.');
     } finally {
