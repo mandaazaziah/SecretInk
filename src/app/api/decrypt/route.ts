@@ -24,8 +24,9 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Decryption error:", error);
     return NextResponse.json(
-      { error: "Decryption failed. Invalid encryption key or corrupted data." },
+      { error: "Dekripsi gagal. Kunci enkripsi salah silahkan coba lagi." },
       { status: 400 }
     );
   }
 }
+

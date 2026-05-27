@@ -178,7 +178,7 @@ export default function AboutPage() {
             {/* Main heading — word-by-word shimmer on hover */}
             <div className="animate-fade-in-up delay-100">
               <h1 className="font-heading text-3xl font-bold tracking-tight text-navy sm:text-4xl md:text-5xl group cursor-default select-none">
-                <span className="inline-block transition-all duration-300 group-hover:text-navy/70">Mengenal</span>{' '}
+                <span className="inline-block transition-all duration-300">Mengenal</span>{' '}
                 <span className="gradient-text-royal inline-block transition-all duration-500 group-hover:opacity-80 group-hover:scale-[1.03] group-hover:[filter:drop-shadow(0_0_20px_rgba(107,127,215,0.4))]">
                   SecretInk
                 </span>
@@ -442,8 +442,11 @@ export default function AboutPage() {
           <div className="mx-auto max-w-6xl">
             {/* Section heading */}
             <div className="animate-fade-in-up mb-14 text-center sm:mb-16">
-              <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-xl bg-mint/10 transition-all duration-500 hover:bg-mint hover:scale-110 hover:rotate-6 cursor-default group">
-                <Shield className="size-6 text-mint icon-pop transition-colors duration-500 group-hover:text-white" strokeWidth={2} />
+            <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-xl bg-blue-500/10 transition-all duration-500 hover:bg-blue-500 hover:scale-110 hover:rotate-6 cursor-default group">
+                <Shield
+                  className="size-6 text-blue-500 icon-pop transition-colors duration-500 group-hover:text-white"
+                  strokeWidth={2}
+                />
               </div>
               <h2 className="font-heading text-3xl font-bold text-navy sm:text-4xl cursor-default">
                 Proteksi Password{' '}
@@ -692,8 +695,8 @@ export default function AboutPage() {
           <div className="mx-auto max-w-4xl">
             {/* Section heading */}
             <div className="animate-fade-in-up mb-14 text-center sm:mb-16">
-              <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-xl bg-mint/10 transition-all duration-500 hover:bg-mint hover:scale-110 hover:rotate-[-6deg] cursor-default group">
-                <EyeOff className="size-6 text-mint icon-pop transition-colors duration-500 group-hover:text-white" strokeWidth={2} />
+             <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-xl bg-blue-500/10 transition-all duration-500 hover:bg-blue-500 hover:scale-110 hover:rotate-[-6deg] cursor-default group">
+                <EyeOff className="size-6 text-blue-500 icon-pop transition-colors duration-500 group-hover:text-white" strokeWidth={2} />
               </div>
               <h2 className="font-heading text-3xl font-bold text-navy sm:text-4xl cursor-default">
                 Filosofi{' '}
