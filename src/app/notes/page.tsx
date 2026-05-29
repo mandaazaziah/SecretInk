@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
@@ -28,7 +28,7 @@ import { cn } from '@/lib/utils';
 
 type StatusState = 'Siap' | 'Terenkripsi' | 'Terdekripsi' | 'Tersimpan';
 
-export default function NotesPage() {
+function NotesPageContent() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -770,5 +770,22 @@ export default function NotesPage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function NotesPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-ice">
+          <div className="flex flex-col items-center gap-3">
+            <div className="spinner-lg" />
+            <p className="text-sm text-muted-foreground font-medium">Memuat...</p>
+          </div>
+        </div>
+      }
+    >
+      <NotesPageContent />
+    </Suspense>
   );
 }
