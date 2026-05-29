@@ -195,7 +195,7 @@ export default function Home() {
 
                 <div className="text-left">
                   <p className="font-heading text-lg font-bold text-navy transition-colors duration-300 group-hover:text-royal">
-                    10,000+
+                    Privasi Terjamin
                   </p>
                   <p className="font-sans text-xs text-navy/50">
                     Catatan Aman

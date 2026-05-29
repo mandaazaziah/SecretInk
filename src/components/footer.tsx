@@ -6,9 +6,9 @@ import { Shield, Lock, Check, Heart } from 'lucide-react';
 
 const quickLinks = [
   { label: 'Beranda', href: '/' },
-  { label: 'Dashboard', href: '/dashboard' },
-  { label: 'Catatan', href: '/notes' },
   { label: 'Tentang', href: '/about' },
+  { label: 'Apa itu AES?', href: '/about#what-is-aes' },
+  { label: 'Cara Kerja', href: '/about#how-it-works' },
 ] as const;
 
 const securityFeatures = [
