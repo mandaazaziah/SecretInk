@@ -526,42 +526,43 @@ export default function DashboardPage() {
           <div className="w-full px-4 py-6 sm:px-6 lg:px-8">
             {/* ═══════════ TOP STATS BAR ═══════════ */}
             {/* Responsive grid for stats cards */}
-            <div className="animate-fade-in-up mb-6 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-3 md:gap-4">
+            <div className="animate-fade-in-up mb-6 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+              
               {/* Total Catatan */}
-              <div className="glass-card rounded-xl p-4 shadow-soft transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-0.5 cursor-default">
-                <div className="flex items-center gap-3">
-                  <div className="flex size-10 items-center justify-center rounded-lg bg-royal/10">
-                    <FileText className="size-5 text-royal icon-pop" />
+              <div className="glass-card rounded-xl p-3 sm:p-4 shadow-soft transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-0.5 cursor-default overflow-hidden">
+                <div className="flex items-center gap-2.5 sm:gap-3">
+                  <div className="flex size-8 sm:size-10 shrink-0 items-center justify-center rounded-lg bg-royal/10">
+                    <FileText className="size-4 sm:size-5 text-royal icon-pop" />
                   </div>
-                  <div>
-                    <p className="text-xs font-medium text-muted-foreground">Total Catatan</p>
-                    <p className="font-heading text-xl font-bold text-navy">{totalNotes}</p>
+                  <div className="min-w-0">
+                    <p className="text-[10px] sm:text-xs font-medium text-muted-foreground truncate">Total Catatan</p>
+                    <p className="font-heading text-base sm:text-xl font-bold text-navy truncate">{totalNotes}</p>
                   </div>
                 </div>
               </div>
 
               {/* Terenkripsi */}
-              <div className="glass-card rounded-xl p-4 shadow-soft transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-0.5 cursor-default">
-                <div className="flex items-center gap-3">
-                  <div className="flex size-10 items-center justify-center rounded-lg bg-mint/10">
-                    <Lock className="size-5 text-mint icon-pop" />
+              <div className="glass-card rounded-xl p-3 sm:p-4 shadow-soft transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-0.5 cursor-default overflow-hidden">
+                <div className="flex items-center gap-2.5 sm:gap-3">
+                  <div className="flex size-8 sm:size-10 shrink-0 items-center justify-center rounded-lg bg-mint/10">
+                    <Lock className="size-4 sm:size-5 text-mint icon-pop" />
                   </div>
-                  <div>
-                    <p className="text-xs font-medium text-muted-foreground">Terenkripsi</p>
-                    <p className="font-heading text-xl font-bold text-navy">{encryptedCount}</p>
+                  <div className="min-w-0">
+                    <p className="text-[10px] sm:text-xs font-medium text-muted-foreground truncate">Terenkripsi</p>
+                    <p className="font-heading text-base sm:text-xl font-bold text-navy truncate">{encryptedCount}</p>
                   </div>
                 </div>
               </div>
 
               {/* Aktivitas Terakhir */}
-              <div className="glass-card rounded-xl p-4 shadow-soft transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-0.5 cursor-default">
-                <div className="flex items-center gap-3">
-                  <div className="flex size-10 items-center justify-center rounded-lg bg-royal/10">
-                    <Clock className="size-5 text-royal icon-pop" />
+              <div className="glass-card rounded-xl p-3 sm:p-4 shadow-soft transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-0.5 cursor-default overflow-hidden">
+                <div className="flex items-center gap-2.5 sm:gap-3">
+                  <div className="flex size-8 sm:size-10 shrink-0 items-center justify-center rounded-lg bg-royal/10">
+                    <Clock className="size-4 sm:size-5 text-royal icon-pop" />
                   </div>
-                  <div>
-                    <p className="text-xs font-medium text-muted-foreground">Aktivitas Terakhir</p>
-                    <p className="font-heading text-sm font-bold text-navy truncate max-w-[100px]">
+                  <div className="min-w-0">
+                    <p className="text-[10px] sm:text-xs font-medium text-muted-foreground truncate">Aktivitas Terakhir</p>
+                    <p className="font-heading text-xs sm:text-sm font-bold text-navy truncate">
                       {latestActivity}
                     </p>
                   </div>
@@ -569,17 +570,19 @@ export default function DashboardPage() {
               </div>
 
               {/* Level Keamanan */}
-              <div className="glass-card rounded-xl p-4 shadow-soft transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-0.5 cursor-default">
-                <div className="flex items-center gap-3">
-                  <div className="flex size-10 items-center justify-center rounded-lg bg-royal/10">
-                    <Shield className="size-5 text-royal icon-pop" />
+              <div className="glass-card rounded-xl p-3 sm:p-4 shadow-soft transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-0.5 cursor-default overflow-hidden">
+                <div className="flex items-center gap-2.5 sm:gap-3">
+                  <div className="flex size-8 sm:size-10 shrink-0 items-center justify-center rounded-lg bg-royal/10">
+                    <Shield className="size-4 sm:size-5 text-royal icon-pop" />
                   </div>
-                  <div>
-                    <p className="text-xs font-medium text-muted-foreground">Level Keamanan</p>
-                    <p className="font-heading text-xl font-bold text-navy">AES-256</p>
+                  <div className="min-w-0">
+                    <p className="text-[10px] sm:text-xs font-medium text-muted-foreground truncate">Level Keamanan</p>
+                    {/* Teks AES-256 diubah menjadi text-sm di HP, dan kembali text-xl di layar besar */}
+                    <p className="font-heading text-sm sm:text-xl font-bold text-navy truncate">AES-256</p>
                   </div>
                 </div>
               </div>
+              
             </div>
 
             {/* ═══════════ MAIN CONTENT AREA ═══════════ */}

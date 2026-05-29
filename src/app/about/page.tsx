@@ -169,13 +169,13 @@ export default function AboutPage() {
         {/* ═══════════════════ HERO SECTION ═══════════════════ */}
         <section className="relative flex min-h-[60vh] items-center justify-center px-4 pt-28 pb-12 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-4xl text-center">
-            {/* Badge pill — hover lift */}
+            {/* Badge pill */}
             <div className="animate-fade-in-up delay-0 mb-6 inline-flex items-center gap-2 rounded-full border border-royal/20 bg-royal/5 px-4 py-1.5 transition-all duration-300 hover:border-royal/40 hover:bg-royal/10 hover:scale-105 cursor-default">
               <Shield className="size-3.5 text-royal" strokeWidth={2.5} />
               <span className="font-sans text-xs font-medium text-royal tracking-wide">Enkripsi Tingkat Tinggi</span>
             </div>
 
-            {/* Main heading — word-by-word shimmer on hover */}
+            {/* Main heading */}
             <div className="animate-fade-in-up delay-100">
               <h1 className="font-heading text-3xl font-bold tracking-tight text-navy sm:text-4xl md:text-5xl group cursor-default select-none">
                 <span className="inline-block transition-all duration-300">Mengenal</span>{' '}
@@ -185,7 +185,7 @@ export default function AboutPage() {
               </h1>
             </div>
 
-            {/* Subtitle — fade-up + hover glow underline */}
+            {/* Subtitle */}
             <div className="animate-fade-in-up delay-200 mx-auto mt-5 max-w-2xl">
               <p className="font-sans text-base sm:text-lg leading-relaxed text-navy/60 transition-colors duration-300 hover:text-navy/80 cursor-default">
                 Memahami teknologi enkripsi yang melindungi informasi Anda dari akses tidak sah, dengan sistem kriptografi yang dirancang untuk menjaga keamanan, integritas, dan kerahasiaan data digital.
@@ -219,9 +219,9 @@ export default function AboutPage() {
 
             {/* Explanation card */}
             <div className="glass-card animate-fade-in-up delay-200 rounded-2xl p-6 shadow-soft-lg sm:p-8 transition-all duration-500 hover:shadow-[0_20px_50px_-10px_rgba(107,127,215,0.15)] hover:-translate-y-1">
-              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-center">
+              <div className="grid grid-cols-1 gap-12 md:gap-8 md:grid-cols-2 md:items-center">
 
-                {/* Left: Explanation text — each item has individual hover */}
+                {/* Left: Explanation text — Centered on mobile */}
                 <div className="space-y-4">
                   {[
                     { strong: 'Kriptografi', text: ' adalah ilmu untuk menjaga kerahasiaan data dalam proses komunikasi digital agar tidak dapat dibaca oleh pihak lain tanpa izin.' },
@@ -231,9 +231,9 @@ export default function AboutPage() {
                   ].map((item, i) => (
                     <div
                       key={i}
-                      className="group/item flex items-start gap-3 rounded-xl p-2 transition-all duration-300 hover:bg-royal/5 hover:translate-x-1 cursor-default"
+                      className="group/item flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left gap-3 rounded-xl p-2 transition-all duration-300 hover:bg-royal/5 hover:translate-x-1 cursor-default"
                     >
-                      <div className="mt-1 flex size-6 shrink-0 items-center justify-center rounded-full bg-royal/10 transition-all duration-300 group-hover/item:bg-royal group-hover/item:scale-110">
+                      <div className="sm:mt-1 flex size-6 shrink-0 items-center justify-center rounded-full bg-royal/10 transition-all duration-300 group-hover/item:bg-royal group-hover/item:scale-110">
                         <Check className="size-3.5 text-royal transition-colors duration-300 group-hover/item:text-white" strokeWidth={3} />
                       </div>
                       <p className="font-sans text-sm leading-relaxed text-navy/70 sm:text-base transition-colors duration-300 group-hover/item:text-navy/90">
@@ -246,16 +246,16 @@ export default function AboutPage() {
                   ))}
                 </div>
 
-                {/* Right: Visual diagram — each step hoverable */}
+                {/* Right: Visual diagram — Centered on mobile */}
                 <div className="flex flex-col items-center gap-3">
-                  <div className="glass-card rounded-xl p-5 shadow-soft w-full max-w-sm transition-all duration-500 hover:shadow-soft-lg">
+                  <div className="glass-card rounded-xl p-5 shadow-soft w-full max-w-sm mx-auto transition-all duration-500 hover:shadow-soft-lg">
                     <p className="mb-3 text-center font-heading text-xs font-semibold uppercase tracking-wider text-navy/40">
                       Alur Enkripsi
                     </p>
                     <div className="flex flex-col items-center gap-3">
 
                       {/* Plaintext */}
-                      <div className="group/step flex w-full items-center gap-3 rounded-lg bg-royal/5 p-3 transition-all duration-300 hover:bg-royal/10 hover:scale-[1.02] hover:shadow-sm cursor-default">
+                      <div className="group/step flex flex-col sm:flex-row w-full items-center text-center sm:text-left gap-3 rounded-lg bg-royal/5 p-3 transition-all duration-300 hover:bg-royal/10 hover:scale-[1.02] hover:shadow-sm cursor-default">
                         <FileText className="size-5 shrink-0 text-royal icon-pop transition-transform duration-300 group-hover/step:scale-110" />
                         <div>
                           <p className="font-heading text-xs font-semibold text-navy">Teks Biasa</p>
@@ -266,7 +266,7 @@ export default function AboutPage() {
                       <ArrowRight className="size-4 rotate-90 text-navy/30 transition-all duration-300 hover:text-royal hover:scale-125" />
 
                       {/* Key + Lock */}
-                      <div className="group/step flex w-full items-center gap-3 rounded-lg bg-royal/10 p-3 transition-all duration-300 hover:bg-royal/20 hover:scale-[1.02] hover:shadow-sm cursor-default">
+                      <div className="group/step flex flex-col sm:flex-row w-full items-center text-center sm:text-left gap-3 rounded-lg bg-royal/10 p-3 transition-all duration-300 hover:bg-royal/20 hover:scale-[1.02] hover:shadow-sm cursor-default">
                         <KeyRound className="size-5 shrink-0 text-royal icon-pop transition-transform duration-300 group-hover/step:scale-110 group-hover/step:rotate-12" />
                         <div>
                           <p className="font-heading text-xs font-semibold text-navy">Kunci Enkripsi</p>
@@ -277,7 +277,7 @@ export default function AboutPage() {
                       <ArrowRight className="size-4 rotate-90 text-navy/30 transition-all duration-300 hover:text-navy/60 hover:scale-125" />
 
                       {/* Ciphertext */}
-                      <div className="group/step flex w-full items-center gap-3 rounded-lg bg-navy/5 p-3 transition-all duration-300 hover:bg-navy/10 hover:scale-[1.02] hover:shadow-sm cursor-default">
+                      <div className="group/step flex flex-col sm:flex-row w-full items-center text-center sm:text-left gap-3 rounded-lg bg-navy/5 p-3 transition-all duration-300 hover:bg-navy/10 hover:scale-[1.02] hover:shadow-sm cursor-default">
                         <Lock className="size-5 shrink-0 text-navy/60 icon-pop transition-all duration-300 group-hover/step:scale-110 group-hover/step:text-navy" />
                         <div>
                           <p className="font-heading text-xs font-semibold text-navy">Teks Sandi</p>
@@ -288,7 +288,7 @@ export default function AboutPage() {
                       <ArrowRight className="size-4 rotate-90 text-mint transition-all duration-300 hover:scale-125 hover:[filter:drop-shadow(0_0_6px_rgba(52,211,153,0.6))]" />
 
                       {/* Decryption Key */}
-                      <div className="group/step flex w-full items-center gap-3 rounded-lg bg-mint/10 p-3 transition-all duration-300 hover:bg-mint/20 hover:scale-[1.02] hover:shadow-sm cursor-default">
+                      <div className="group/step flex flex-col sm:flex-row w-full items-center text-center sm:text-left gap-3 rounded-lg bg-mint/10 p-3 transition-all duration-300 hover:bg-mint/20 hover:scale-[1.02] hover:shadow-sm cursor-default">
                         <KeyRound className="size-5 shrink-0 text-mint icon-pop transition-all duration-300 group-hover/step:scale-110 group-hover/step:rotate-[-12deg]" />
                         <div>
                           <p className="font-heading text-xs font-semibold text-navy">Kunci Dekripsi</p>
@@ -299,7 +299,7 @@ export default function AboutPage() {
                       <ArrowRight className="size-4 rotate-90 text-mint transition-all duration-300 hover:scale-125 hover:[filter:drop-shadow(0_0_6px_rgba(52,211,153,0.6))]" />
 
                       {/* Original Plaintext */}
-                      <div className="group/step flex w-full items-center gap-3 rounded-lg bg-mint/5 p-3 transition-all duration-300 hover:bg-mint/15 hover:scale-[1.02] hover:shadow-sm cursor-default">
+                      <div className="group/step flex flex-col sm:flex-row w-full items-center text-center sm:text-left gap-3 rounded-lg bg-mint/5 p-3 transition-all duration-300 hover:bg-mint/15 hover:scale-[1.02] hover:shadow-sm cursor-default">
                         <Check className="size-5 shrink-0 text-mint icon-pop transition-all duration-300 group-hover/step:scale-125" />
                         <div>
                           <p className="font-heading text-xs font-semibold text-navy">Teks Asli</p>
@@ -349,9 +349,9 @@ export default function AboutPage() {
                   return (
                     <div
                       key={i}
-                      className="group/item flex items-start gap-3 rounded-xl p-2.5 transition-all duration-300 hover:bg-navy/5 hover:translate-x-1 cursor-default"
+                      className="group/item flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left gap-3 rounded-xl p-2.5 transition-all duration-300 hover:bg-navy/5 hover:translate-x-1 cursor-default"
                     >
-                      <div className={`mt-1 flex size-6 shrink-0 items-center justify-center rounded-full ${isMint ? 'bg-mint/20' : 'bg-royal/10'} transition-all duration-300 ${isMint ? 'group-hover/item:bg-mint' : 'group-hover/item:bg-royal'} group-hover/item:scale-110`}>
+                      <div className={`sm:mt-1 flex size-6 shrink-0 items-center justify-center rounded-full ${isMint ? 'bg-mint/20' : 'bg-royal/10'} transition-all duration-300 ${isMint ? 'group-hover/item:bg-mint' : 'group-hover/item:bg-royal'} group-hover/item:scale-110`}>
                         <Icon className={`size-3.5 ${isMint ? 'text-mint' : 'text-royal'} transition-colors duration-300 group-hover/item:text-white`} strokeWidth={3} />
                       </div>
                       <p className="font-sans text-sm leading-relaxed text-navy/70 sm:text-base transition-colors duration-300 group-hover/item:text-navy/90">
@@ -389,19 +389,19 @@ export default function AboutPage() {
 
             {/* Security comparison */}
             <div className="glass-card animate-fade-in-up delay-300 rounded-2xl p-6 shadow-soft-lg sm:p-8 transition-all duration-500 hover:shadow-[0_20px_50px_-10px_rgba(107,127,215,0.10)] hover:-translate-y-1">
-              <h3 className="font-heading mb-6 text-lg font-semibold text-navy sm:text-xl">
+              <h3 className="font-heading mb-6 text-center sm:text-left text-lg font-semibold text-navy sm:text-xl">
                 Perbandingan Keamanan
               </h3>
               <div className="space-y-5">
                 {securityComparison.map((item) => (
                   <div
                     key={item.method}
-                    className="group flex items-center gap-4 rounded-xl px-2 py-2.5 transition-all duration-300 hover:bg-navy/5 hover:px-4 cursor-default"
+                    className="group flex flex-col sm:flex-row items-center text-center sm:text-left gap-3 sm:gap-4 rounded-xl px-2 py-3 sm:py-2.5 transition-all duration-300 hover:bg-navy/5 hover:px-4 cursor-default"
                   >
-                    <p className="w-24 shrink-0 font-heading text-sm font-medium text-navy sm:w-32 sm:text-base transition-all duration-300 group-hover:text-royal group-hover:font-semibold">
+                    <p className="w-full sm:w-32 shrink-0 font-heading text-sm font-medium text-navy sm:text-base transition-all duration-300 group-hover:text-royal group-hover:font-semibold">
                       {item.method}
                     </p>
-                    <div className="flex-1">
+                    <div className="w-full sm:flex-1">
                       <div className="h-3 w-full overflow-hidden rounded-full bg-navy/5">
                         <div
                           className={`h-full rounded-full transition-all duration-700 ease-out group-hover:brightness-110 ${
@@ -418,7 +418,7 @@ export default function AboutPage() {
                       </div>
                     </div>
                     <span
-                      className={`shrink-0 font-sans text-xs font-semibold sm:text-sm transition-all duration-300 group-hover:scale-105 ${
+                      className={`w-full sm:w-auto shrink-0 font-sans text-xs font-semibold sm:text-sm transition-all duration-300 group-hover:scale-105 ${
                         item.strength === 100
                           ? 'text-mint'
                           : item.strength === 70
@@ -461,9 +461,9 @@ export default function AboutPage() {
 
             {/* Bcrypt explanation card */}
             <div className="glass-card animate-fade-in-up delay-100 rounded-2xl p-6 shadow-soft-lg sm:p-8 transition-all duration-500 hover:shadow-[0_20px_50px_-10px_rgba(52,211,153,0.12)] hover:-translate-y-1">
-              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-stretch">
+              <div className="grid grid-cols-1 gap-12 md:gap-8 md:grid-cols-2 md:items-stretch">
 
-                {/* Left: Explanation — individual hover per item */}
+                {/* Left: Explanation — Centered on mobile */}
                 <div className="flex flex-col justify-between gap-4">
                   {[
                     <>Password <strong className="text-navy">tidak pernah disimpan dalam bentuk teks biasa</strong>. Sebaliknya, password diubah menjadi hash satu arah yang tidak dapat dikembalikan ke bentuk asli.</>,
@@ -473,9 +473,9 @@ export default function AboutPage() {
                   ].map((text, i) => (
                     <div
                       key={i}
-                      className="group/item flex items-start gap-3 rounded-xl p-2.5 transition-all duration-300 hover:bg-mint/8 hover:translate-x-1 cursor-default"
+                      className="group/item flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left gap-3 rounded-xl p-2.5 transition-all duration-300 hover:bg-mint/8 hover:translate-x-1 cursor-default"
                     >
-                      <div className="mt-1 flex size-6 shrink-0 items-center justify-center rounded-full bg-mint/15 transition-all duration-300 group-hover/item:bg-mint group-hover/item:scale-110">
+                      <div className="sm:mt-1 flex size-6 shrink-0 items-center justify-center rounded-full bg-mint/15 transition-all duration-300 group-hover/item:bg-mint group-hover/item:scale-110">
                         <Check className="size-3.5 text-mint transition-colors duration-300 group-hover/item:text-white" strokeWidth={3} />
                       </div>
                       <p className="font-sans text-sm leading-relaxed text-navy/70 sm:text-base transition-colors duration-300 group-hover/item:text-navy/90">
@@ -485,15 +485,15 @@ export default function AboutPage() {
                   ))}
                 </div>
 
-                {/* Right: Visual diagram — each row hoverable */}
-                <div className="glass-card flex flex-col justify-between rounded-xl p-4 shadow-soft transition-all duration-500 hover:shadow-soft-lg">
+                {/* Right: Visual diagram — Centered on mobile */}
+                <div className="glass-card flex flex-col justify-between rounded-xl p-4 shadow-soft transition-all duration-500 hover:shadow-soft-lg w-full max-w-sm mx-auto md:max-w-none">
                   <p className="mb-3 text-center font-heading text-xs font-semibold uppercase tracking-wider text-navy/40">
                     Cara Kerja Bcrypt
                   </p>
-                  <div className="flex flex-1 flex-col items-center justify-between gap-2">
+                  <div className="flex flex-1 flex-col items-center justify-between gap-3">
 
                     {/* Password input */}
-                    <div className="group/step w-full rounded-lg bg-navy/5 p-2.5 transition-all duration-300 hover:bg-navy/10 hover:scale-[1.02] cursor-default">
+                    <div className="group/step w-full flex flex-col items-center text-center sm:items-start sm:text-left rounded-lg bg-navy/5 p-3 transition-all duration-300 hover:bg-navy/10 hover:scale-[1.02] cursor-default">
                       <p className="font-mono text-xs text-navy/60 transition-colors duration-300 group-hover/step:text-navy/80">myPassword123</p>
                       <p className="mt-0.5 font-sans text-[11px] text-navy/40 transition-colors duration-300 group-hover/step:text-navy/60">Password teks biasa</p>
                     </div>
@@ -502,7 +502,7 @@ export default function AboutPage() {
 
                     {/* Salt + Cost */}
                     <div className="group/step w-full">
-                      <div className="flex items-center gap-2 rounded-lg bg-royal/5 p-2.5 transition-all duration-300 hover:bg-royal/12 hover:scale-[1.02] cursor-default">
+                      <div className="flex flex-col sm:flex-row items-center text-center sm:text-left gap-3 rounded-lg bg-royal/5 p-3 transition-all duration-300 hover:bg-royal/12 hover:scale-[1.02] cursor-default">
                         <Hash className="size-4 shrink-0 text-royal icon-pop transition-transform duration-300 group-hover/step:scale-110 group-hover/step:rotate-12" />
                         <div>
                           <p className="font-mono text-[11px] text-navy/60 transition-colors duration-300 group-hover/step:text-navy/80">$2b$12$randomsalt22chars</p>
@@ -514,15 +514,15 @@ export default function AboutPage() {
                     <ArrowRight className="size-4 rotate-90 text-mint transition-all duration-300 hover:scale-125 hover:[filter:drop-shadow(0_0_6px_rgba(52,211,153,0.6))]" />
 
                     {/* Hash output */}
-                    <div className="group/step w-full rounded-lg bg-mint/5 p-2.5 transition-all duration-300 hover:bg-mint/12 hover:scale-[1.02] cursor-default">
+                    <div className="group/step w-full flex flex-col items-center text-center sm:items-start sm:text-left rounded-lg bg-mint/5 p-3 transition-all duration-300 hover:bg-mint/12 hover:scale-[1.02] cursor-default">
                       <p className="break-all font-mono text-[10px] text-navy/50 transition-colors duration-300 group-hover/step:text-navy/70">
                         $2b$12$randomsalt22charsOE9fWxJKv3gKXM8hHqP6uG5mZbNiKXW8eQvY2R
                       </p>
-                      <p className="mt-0.5 font-sans text-[11px] text-navy/40 transition-colors duration-300 group-hover/step:text-navy/60">Hash bcrypt yang tidak dapat dibalikkan, disimpan di database</p>
+                      <p className="mt-1 font-sans text-[11px] text-navy/40 transition-colors duration-300 group-hover/step:text-navy/60">Hash bcrypt yang tidak dapat dibalikkan, disimpan di database</p>
                     </div>
 
                     {/* Callout */}
-                    <div className="group/step flex w-full items-center gap-2 rounded-lg bg-mint/10 px-3 py-2 transition-all duration-300 hover:bg-mint/20 hover:scale-[1.02] cursor-default">
+                    <div className="group/step flex w-full flex-col sm:flex-row items-center text-center sm:text-left gap-2 rounded-lg bg-mint/10 px-3 py-2 transition-all duration-300 hover:bg-mint/20 hover:scale-[1.02] cursor-default">
                       <Shield className="size-4 shrink-0 text-mint icon-pop transition-transform duration-300 group-hover/step:scale-110" />
                       <p className="font-sans text-xs font-medium text-navy/70 transition-colors duration-300 group-hover/step:text-navy/90">
                         Tidak mungkin dikembalikan ke password asli
@@ -535,7 +535,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ═══════════════════ HOW SECRETINK WORKS ═══════════════════ */}
+        {/* ═══════════════════ HOW SECRETINK WORKS (TIMELINE) ═══════════════════ */}
         <section id="how-it-works" className="relative scroll-mt-20 px-4 py-16 sm:px-6 sm:py-18 lg:px-8">
           <div className="mx-auto max-w-6xl">
             {/* Section heading */}
@@ -557,14 +557,15 @@ export default function AboutPage() {
 
             {/* Timeline */}
             <div className="relative">
-              <div className="absolute bottom-0 left-6 top-0 w-px bg-gradient-to-b from-royal/20 via-royal/10 to-mint/20 md:left-1/2 md:-translate-x-px" />
+              {/* Garis Vertikal HANYA muncul di desktop (md:block) */}
+              <div className="hidden md:block absolute bottom-0 left-1/2 top-0 w-px -translate-x-px bg-gradient-to-b from-royal/20 via-royal/10 to-mint/20" />
 
-              <div className="space-y-6">
+              <div className="space-y-12 md:space-y-6">
                 {howItWorksSteps.map((step, index) => {
                   const Icon = step.icon;
                   const isLeft = index % 2 === 0;
                   const isMint = index % 2 !== 0;
-                  const colorBg    = isMint ? 'bg-mint'   : 'bg-royal';
+                  const colorBg    = isMint ? 'bg-mint'    : 'bg-royal';
                   const colorText  = isMint ? 'text-mint'  : 'text-royal';
                   const colorIcon  = isMint ? 'bg-mint/10' : 'bg-royal/10';
 
@@ -575,11 +576,32 @@ export default function AboutPage() {
                   return (
                     <div
                       key={step.number}
-                      className="animate-fade-in-up relative flex items-start md:grid md:grid-cols-[1fr_32px_1fr] md:items-start md:gap-0 group"
+                      className="animate-fade-in-up relative flex flex-col items-center text-center md:grid md:grid-cols-[1fr_32px_1fr] md:items-start md:text-left md:gap-0 group"
                       style={{ animationDelay: `${(index + 1) * 150}ms`, animationFillMode: 'both' }}
                     >
-                      {/* Left slot */}
-                      <div className={`${isLeft ? 'pl-10 md:pl-0 md:pr-6' : 'hidden md:block'}`}>
+                      
+                      {/* Mobile Card (Menyatu di tengah, HANYA tampil di layar HP) */}
+                      <div className="md:hidden flex flex-col items-center w-full max-w-sm">
+                        {/* Lingkaran Nomor untuk Mobile */}
+                        <div className={`mb-4 flex size-10 items-center justify-center rounded-full shadow-[0_0_0_4px_white] transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${colorBg}`}>
+                          <span className="font-heading text-sm font-bold leading-none text-white">
+                            {step.number}
+                          </span>
+                        </div>
+                        {/* Isi Kartu Mobile */}
+                        <div className={`glass-card w-full rounded-xl p-5 shadow-soft border border-navy/5 transform transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-1.5 ${colorHover} cursor-default`}>
+                          <div className="mb-3 flex flex-col items-center gap-2">
+                            <div className={`flex size-10 shrink-0 items-center justify-center rounded-lg ${colorIcon}`}>
+                              <Icon className={`size-5 ${colorText}`} strokeWidth={2} />
+                            </div>
+                            <h3 className={`font-heading text-base font-semibold text-navy`}>{step.title}</h3>
+                          </div>
+                          <p className="font-sans text-sm leading-relaxed text-navy/60">{step.description}</p>
+                        </div>
+                      </div>
+
+                      {/* Desktop Left slot */}
+                      <div className={`hidden md:block w-full ${isLeft ? 'pr-6' : ''}`}>
                         {isLeft && (
                           <div className={`glass-card rounded-xl p-4 shadow-soft border border-navy/5 transform transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-1.5 ${colorHover} cursor-default`}>
                             <div className="mb-2 flex items-center justify-end gap-2.5">
@@ -593,9 +615,9 @@ export default function AboutPage() {
                         )}
                       </div>
 
-                      {/* Center dot */}
-                      <div className="relative flex justify-center">
-                        <div className="absolute left-6 top-4 md:static md:left-auto md:top-auto md:mt-3.5">
+                      {/* Desktop Center dot */}
+                      <div className="hidden md:flex relative justify-center">
+                        <div className="mt-3.5">
                           <div className={`flex size-6 items-center justify-center rounded-full shadow-[0_0_0_4px_white] transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:scale-125 group-hover:shadow-[0_0_0_6px_white,0_0_12px_rgba(107,127,215,0.4)] ${colorBg}`}>
                             <span className="font-heading text-xs font-bold leading-none text-white">
                               {step.number}
@@ -604,8 +626,8 @@ export default function AboutPage() {
                         </div>
                       </div>
 
-                      {/* Right slot */}
-                      <div className={`${!isLeft ? 'pl-10 md:pl-6 md:pr-0' : 'hidden md:block'}`}>
+                      {/* Desktop Right slot */}
+                      <div className={`hidden md:block w-full ${!isLeft ? 'pl-6' : ''}`}>
                         {!isLeft && (
                           <div className={`glass-card rounded-xl p-4 shadow-soft border border-navy/5 transform transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-1.5 ${colorHover} cursor-default`}>
                             <div className="mb-2 flex items-center gap-2.5">
@@ -624,17 +646,17 @@ export default function AboutPage() {
               </div>
 
               {/* Emphasis callout */}
-              <div className="animate-fade-in-up mt-10" style={{ animationDelay: '700ms', animationFillMode: 'both' }}>
-                <div className="glass-card group mx-auto max-w-xl rounded-xl border border-navy/5 border-l-2 border-l-mint/40 p-4 shadow-soft-lg transform transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-1 hover:border-l-mint/70 hover:border-mint/20 hover:shadow-[0_12px_30px_-4px_rgba(52,211,153,0.12)] cursor-default">
-                  <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:text-left">
-                    <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-mint/10 transition-all duration-500 ease-out group-hover:bg-mint group-hover:scale-110">
-                      <EyeOff className="size-4 text-mint transition-colors duration-500 group-hover:text-white" strokeWidth={2} />
+              <div className="animate-fade-in-up mt-12 md:mt-10" style={{ animationDelay: '700ms', animationFillMode: 'both' }}>
+                <div className="glass-card group mx-auto max-w-xl rounded-xl border border-navy/5 md:border-l-2 md:border-l-mint/40 p-5 shadow-soft-lg transform transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-1 hover:border-l-mint/70 hover:border-mint/20 hover:shadow-[0_12px_30px_-4px_rgba(52,211,153,0.12)] cursor-default">
+                  <div className="flex flex-col items-center text-center sm:flex-row sm:text-left gap-4">
+                    <div className="flex size-12 sm:size-9 shrink-0 items-center justify-center rounded-xl sm:rounded-lg bg-mint/10 transition-all duration-500 ease-out group-hover:bg-mint group-hover:scale-110">
+                      <EyeOff className="size-5 sm:size-4 text-mint transition-colors duration-500 group-hover:text-white" strokeWidth={2} />
                     </div>
                     <div>
-                      <p className="font-heading text-sm font-bold text-navy transition-colors duration-300 group-hover:text-navy/90">
+                      <p className="font-heading text-base sm:text-sm font-bold text-navy transition-colors duration-300 group-hover:text-navy/90">
                         Sistem kami menerapkan <span className="text-mint">ZERO-KNOWLEDGE</span>, kunci tidak pernah dikirim ke server
                       </p>
-                      <p className="mt-0.5 font-sans text-xs text-navy/50 transition-colors duration-300 group-hover:text-navy/70">
+                      <p className="mt-1 sm:mt-0.5 font-sans text-sm sm:text-xs text-navy/50 transition-colors duration-300 group-hover:text-navy/70">
                         Secara sistem, kami tidak memiliki kemampuan untuk memulihkan atau membaca catatan Anda. Kendali penuh ada di tangan Anda.
                       </p>
                     </div>
@@ -671,16 +693,16 @@ export default function AboutPage() {
                 return (
                   <div
                     key={feature.title}
-                    className="group glass-card rounded-2xl p-6 shadow-soft border border-navy/5 transform transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:shadow-soft-lg hover:-translate-y-2 hover:bg-white/80 hover:ring-1 hover:ring-royal/20 sm:p-6 animate-fade-in-up cursor-default"
+                    className="group glass-card flex flex-col items-center text-center rounded-2xl p-6 shadow-soft border border-navy/5 transform transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:shadow-soft-lg hover:-translate-y-2 hover:bg-white/80 hover:ring-1 hover:ring-royal/20 sm:p-6 animate-fade-in-up cursor-default"
                     style={{ animationDelay: `${(index + 1) * 150}ms`, animationFillMode: 'both' }}
                   >
-                    <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-royal/10 transition-all duration-500 ease-out group-hover:bg-royal group-hover:scale-110 group-hover:rotate-3">
-                      <Icon className="size-5 text-royal transition-all duration-500 ease-out group-hover:text-white" strokeWidth={2} />
+                    <div className="mb-4 flex size-12 items-center justify-center rounded-xl bg-royal/10 transition-all duration-500 ease-out group-hover:bg-royal group-hover:scale-110 group-hover:rotate-3">
+                      <Icon className="size-6 text-royal transition-all duration-500 ease-out group-hover:text-white" strokeWidth={2} />
                     </div>
-                    <h3 className="font-heading text-base font-semibold text-navy transition-colors duration-300 group-hover:text-royal sm:text-lg">
+                    <h3 className="font-heading text-lg font-semibold text-navy transition-colors duration-300 group-hover:text-royal">
                       {feature.title}
                     </h3>
-                    <p className="mt-2 font-sans text-sm leading-relaxed text-navy/50 transition-colors duration-300 group-hover:text-navy/70">
+                    <p className="mt-2 font-sans text-sm leading-relaxed text-navy/60 transition-colors duration-300 group-hover:text-navy/80">
                       {feature.description}
                     </p>
                   </div>
@@ -720,16 +742,16 @@ export default function AboutPage() {
                     <div key={i}>
                       {i > 0 && <div className="h-px bg-border/50 mb-6" />}
                       <div
-                        className="group/item flex items-start gap-4 rounded-xl p-3 transition-all duration-300 hover:bg-navy/5 hover:translate-x-1 cursor-default"
+                        className="group/item flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left gap-4 rounded-xl p-3 transition-all duration-300 hover:bg-navy/5 hover:translate-x-1 cursor-default"
                       >
-                        <div className={`mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg ${isMint ? 'bg-mint/15' : 'bg-royal/10'} transition-all duration-400 ease-out group-hover/item:scale-110 ${isMint ? 'group-hover/item:bg-mint' : 'group-hover/item:bg-royal'}`}>
-                          <Icon className={`size-4 ${isMint ? 'text-mint' : 'text-royal'} icon-pop transition-colors duration-400 group-hover/item:text-white`} strokeWidth={2.5} />
+                        <div className={`sm:mt-0.5 flex size-10 sm:size-8 shrink-0 items-center justify-center rounded-xl sm:rounded-lg ${isMint ? 'bg-mint/15' : 'bg-royal/10'} transition-all duration-400 ease-out group-hover/item:scale-110 ${isMint ? 'group-hover/item:bg-mint' : 'group-hover/item:bg-royal'}`}>
+                          <Icon className={`size-5 sm:size-4 ${isMint ? 'text-mint' : 'text-royal'} icon-pop transition-colors duration-400 group-hover/item:text-white`} strokeWidth={2.5} />
                         </div>
                         <div>
                           <h4 className={`font-heading text-base font-semibold text-navy sm:text-lg transition-colors duration-300 group-hover/item:${isMint ? 'text-mint' : 'text-royal'}`}>
                             {item.title}
                           </h4>
-                          <p className="mt-1 font-sans text-sm leading-relaxed text-navy/50 transition-colors duration-300 group-hover/item:text-navy/70">
+                          <p className="mt-2 sm:mt-1 font-sans text-sm leading-relaxed text-navy/60 transition-colors duration-300 group-hover/item:text-navy/80">
                             {item.description}
                           </p>
                         </div>
@@ -742,15 +764,15 @@ export default function AboutPage() {
 
               {/* Bottom emphasis banner */}
               <div className="group/banner mt-8 rounded-xl bg-gradient-to-r from-royal/5 via-mint/5 to-royal/5 p-5 transition-all duration-500 hover:from-royal/10 hover:via-mint/10 hover:to-royal/10 hover:scale-[1.01] cursor-default">
-                <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:text-left">
-                  <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-mint/15 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/banner:bg-mint group-hover/banner:scale-110 group-hover/banner:rotate-6">
+                <div className="flex flex-col items-center text-center sm:flex-row sm:text-left gap-4">
+                  <div className="flex size-14 sm:size-12 shrink-0 items-center justify-center rounded-xl bg-mint/15 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/banner:bg-mint group-hover/banner:scale-110 group-hover/banner:rotate-6">
                     <Lock className="size-6 text-mint icon-pop transition-colors duration-500 group-hover/banner:text-white" strokeWidth={2} />
                   </div>
                   <div>
-                    <p className="font-heading text-base font-bold text-navy sm:text-lg transition-colors duration-300 group-hover/banner:text-navy/90">
+                    <p className="font-heading text-lg font-bold text-navy transition-colors duration-300 group-hover/banner:text-navy/90">
                       Data Anda. Kunci Anda. Kendali Anda.
                     </p>
-                    <p className="mt-1 font-sans text-sm text-navy/50 transition-colors duration-300 group-hover/banner:text-navy/70">
+                    <p className="mt-2 sm:mt-1 font-sans text-sm text-navy/60 transition-colors duration-300 group-hover:text-navy/80">
                       Arsitektur zero knowledge memastikan bahwa akses ke catatan Anda
                       hanya dapat dilakukan oleh pemegang kunci enkripsi — yaitu Anda.
                     </p>

@@ -90,7 +90,7 @@ export default function LoginPage() {
           {/* Login Card */}
           <div className="glass-card rounded-2xl p-8 shadow-soft-lg">
             {/* Header */}
-            <div className="flex flex-col items-center mb-8">
+            <div className="flex flex-col items-center text-center mb-8">
               <div
                 className={cn(
                   'flex items-center justify-center',

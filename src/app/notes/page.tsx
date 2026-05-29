@@ -391,33 +391,33 @@ export default function NotesPage() {
         <div className="mx-auto max-w-6xl">
           {/* Page Header */}
           <div className="mb-8 animate-fade-in-up">
-            <div className="flex flex-wrap items-center gap-4 mb-2">
+            <div className="flex items-start gap-4">
               <Button
                 variant="ghost"
                 size="icon"
                 asChild
-                className="hover:bg-white/50 cursor-pointer"
+                className="hover:bg-white/50 cursor-pointer shrink-0 mt-0.5 sm:mt-1"
               >
                 <Link href="/dashboard">
                   <ArrowLeft className="size-4 icon-pop" />
                 </Link>
               </Button>
-              
-              <h1
-                className={cn(
-                  'text-2xl sm:text-3xl font-bold tracking-tight text-navy cursor-default',
-                  'font-[family-name:var(--font-poppins)]'
-                )}
-              >
-                {isEditMode ? 'Edit Catatan' : 'Catatan Rahasia'}
-              </h1>
+              <div className="flex flex-col min-w-0">
+                <h1
+                  className={cn(
+                    'text-2xl sm:text-3xl font-bold tracking-tight text-navy cursor-default truncate',
+                    'font-[family-name:var(--font-poppins)]'
+                  )}
+                >
+                  {isEditMode ? 'Edit Catatan' : 'Catatan Rahasia'}
+                </h1>
+                <p className="text-muted-foreground text-sm sm:text-base mt-0.5 sm:mt-1 cursor-default">
+                  {isEditMode
+                    ? 'Dekripsi catatan Anda, ubah isinya, enkripsi ulang, lalu simpan'
+                    : 'Buat, enkripsi, dan kelola catatan aman Anda'}
+                </p>
+              </div>
             </div>
-            
-            <p className="text-muted-foreground text-sm sm:text-base mt-1 cursor-default">
-              {isEditMode
-                ? 'Dekripsi catatan Anda, ubah isinya, enkripsi ulang, lalu simpan'
-                : 'Buat, enkripsi, dan kelola catatan aman Anda'}
-            </p>
           </div>
 
           {/* Two-Column Layout */}
