@@ -316,7 +316,7 @@ export default function AboutPage() {
         </section>
 
         {/* ═══════════════════ AES-256 ENCRYPTION ═══════════════════ */}
-        <section className="relative px-4 py-16 sm:px-6 sm:py-18 lg:px-8">
+        <section id="what-is-aes" className="relative scroll-mt-20 px-4 py-16 sm:px-6 sm:py-18 lg:px-8">
           <div className="mx-auto max-w-6xl">
             {/* Section heading */}
             <div className="animate-fade-in-up mb-14 text-center sm:mb-16">
@@ -536,7 +536,7 @@ export default function AboutPage() {
         </section>
 
         {/* ═══════════════════ HOW SECRETINK WORKS ═══════════════════ */}
-        <section className="relative px-4 py-16 sm:px-6 sm:py-18 lg:px-8">
+        <section id="how-it-works" className="relative scroll-mt-20 px-4 py-16 sm:px-6 sm:py-18 lg:px-8">
           <div className="mx-auto max-w-6xl">
             {/* Section heading */}
             <div className="animate-fade-in-up mb-14 text-center sm:mb-16">
