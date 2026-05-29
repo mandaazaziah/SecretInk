@@ -31,7 +31,7 @@ export default function Footer() {
           {/* Column 1: Brand */}
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2.5">
-              <img src="/logo.svg" alt="SecretInk Logo" className="h-7 w-7 logo-zoom" />
+              <img src="/logo.png" alt="SecretInk Logo" className="h-8 w-8" />
               <span
                 className="text-xl font-semibold tracking-tight"
                 style={{ fontFamily: 'Poppins, sans-serif' }}

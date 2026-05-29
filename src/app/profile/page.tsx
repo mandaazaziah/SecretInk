@@ -170,26 +170,15 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Top Bar */}
-      <header className="sticky top-0 z-50 glass-strong border-b border-border/50">
+      <header className="sticky top-0 z-50 bg-white border-b border-border/50 shadow-sm">
         <div className="mx-auto max-w-2xl flex items-center justify-between px-4 sm:px-6 lg:px-8 h-14">
           <Link href="/dashboard" className="flex items-center gap-2 group">
-            <img src="/logo.svg" alt="SecretInk" className="h-7 logo-zoom" />
+            <img src="/logo.png" alt="SecretInk" className="h-7" />
             <span className="text-lg font-bold font-[family-name:var(--font-poppins)]">
               <span className="text-navy group-hover:text-royal transition-colors">Secret</span>
               <span className="text-royal group-hover:text-royal-light transition-colors">Ink</span>
             </span>
           </Link>
-          <Button
-            variant="outline"
-            size="sm"
-            asChild
-            className="gap-2 border-royal/20 text-royal hover:bg-royal/5 hover:text-royal"
-          >
-            <Link href="/dashboard">
-              <ArrowLeft className="size-4 icon-pop" />
-              Kembali ke Dashboard
-            </Link>
-          </Button>
         </div>
       </header>
 
@@ -207,14 +196,12 @@ export default function ProfilePage() {
               variant="ghost"
               size="icon"
               onClick={() => router.back()}
-              className="hover:bg-white/50"
+              className="hover:bg-white/50 cursor-pointer" 
             >
               <ArrowLeft className="h-5 w-5 icon-pop" />
             </Button>
             <div>
-              <h1
-                className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-poppins)]"
-              >
+              <h1 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-poppins)]">
                 Pengaturan Profil
               </h1>
               <p className="text-muted-foreground text-sm">Kelola informasi akun Anda</p>
@@ -292,7 +279,7 @@ export default function ProfilePage() {
               <Button
                 onClick={handleProfileUpdate}
                 disabled={loading || !hasProfileChanges}
-                className="btn-royal rounded-xl h-11 w-full sm:w-auto px-8"
+                className="btn-royal rounded-xl h-11 w-full sm:w-auto px-8 cursor-pointer"
               >
                 {loading ? (
                   <>
@@ -379,7 +366,7 @@ export default function ProfilePage() {
               <Button
                 onClick={handlePasswordChange}
                 disabled={passwordLoading}
-                className="btn-royal rounded-xl h-11 w-full sm:w-auto px-8"
+                className="btn-royal rounded-xl h-11 w-full sm:w-auto px-8 cursor-pointer"
               >
                 {passwordLoading ? (
                   <>
@@ -419,7 +406,7 @@ export default function ProfilePage() {
               <Button
                 variant="destructive"
                 onClick={() => setShowDeleteModal(true)}
-                className="w-full rounded-xl h-11"
+                className="w-full rounded-xl h-11 cursor-pointer"
               >
                 <Trash2 className="h-4 w-4 mr-2" />
                 Hapus Akun Saya

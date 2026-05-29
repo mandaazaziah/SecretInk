@@ -18,17 +18,15 @@ import {
 import {
   Menu,
   LogOut,
-  Home,
-  Info,
   LogIn,
   UserPlus,
   User,
 } from "lucide-react";
 
-// Only Beranda & Tentang in navbar
+// NavLinks tanpa icon
 const navLinks = [
-  { href: "/", label: "Beranda", icon: Home },
-  { href: "/about", label: "Tentang", icon: Info },
+  { href: "/", label: "Beranda" },
+  { href: "/about", label: "Tentang" },
 ];
 
 // ─── Two-color brand title component ──────────────────────────────────────
@@ -62,9 +60,9 @@ export default function Navbar() {
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50",
-        "glass-strong",
-        "border-b border-[rgba(226,232,240,0.5)]",
-        "shadow-soft"
+        "bg-white/95 backdrop-blur-md",
+        "border-b border-border/50",
+        "shadow-sm"
       )}
     >
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -74,36 +72,34 @@ export default function Navbar() {
           className="flex items-center gap-2.5 group"
         >
           <img
-            src="/logo.svg"
+            src="/logo.png"
             alt="SecretInk Logo"
-            className="size-8 logo-zoom"
+            className="size-8"
           />
           <BrandTitle className="text-xl font-bold" />
         </Link>
 
-        {/* Center Navigation Links (desktop) */}
-        <div className="hidden md:flex items-center gap-1">
+        {/* Center Navigation Links (desktop) - Tanpa Icon */}
+        <div className="hidden md:flex items-center gap-2">
           {navLinks.map((link) => {
-            const Icon = link.icon;
             const active = isActive(link.href);
             return (
               <Link
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "relative flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-md",
+                  "relative flex items-center px-4 py-2 text-sm font-medium rounded-md",
                   "transition-colors duration-200",
                   active
                     ? "text-royal"
                     : "text-navy-light hover:text-royal hover:bg-accent/50"
                 )}
               >
-                <Icon className="size-4 icon-pop" />
                 {link.label}
                 {active && (
                   <span
                     className={cn(
-                      "absolute bottom-0 left-3 right-3 h-0.5 rounded-full",
+                      "absolute bottom-0 left-4 right-4 h-0.5 rounded-full",
                       "bg-royal"
                     )}
                   />
@@ -177,9 +173,10 @@ export default function Navbar() {
                 asChild
                 className="btn-royal gap-1.5"
               >
+                {/* Teks diubah menjadi Daftar */}
                 <Link href="/register">
                   <UserPlus className="size-4" />
-                  Mulai Gratis
+                  Daftar
                 </Link>
               </Button>
             </div>
@@ -204,7 +201,8 @@ export default function Navbar() {
               <SheetHeader
                 className={cn(
                   "border-b border-border/50 px-6 py-4",
-                  "glass-strong"
+                  // Background solid pada header mobile menu
+                  "bg-white"
                 )}
               >
                 <SheetTitle className="flex items-center gap-2.5">
@@ -213,24 +211,22 @@ export default function Navbar() {
                 </SheetTitle>
               </SheetHeader>
 
-              {/* Mobile Navigation Links */}
+              {/* Mobile Navigation Links - Tanpa Icon */}
               <div className="flex flex-col px-3 py-4">
                 {navLinks.map((link) => {
-                  const Icon = link.icon;
                   const active = isActive(link.href);
                   return (
                     <SheetClose asChild key={link.href}>
                       <Link
                         href={link.href}
                         className={cn(
-                          "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium",
+                          "flex items-center rounded-lg px-4 py-3 text-sm font-medium",
                           "transition-all duration-200",
                           active
                             ? "bg-accent text-royal"
                             : "text-navy-light hover:bg-accent/50 hover:text-royal"
                         )}
                       >
-                        <Icon className="size-4" />
                         {link.label}
                         {active && (
                           <span className="ml-auto size-1.5 rounded-full bg-royal" />
@@ -328,7 +324,7 @@ export default function Navbar() {
                       >
                         <Link href="/register">
                           <UserPlus className="size-4" />
-                          Mulai Gratis
+                          Daftar
                         </Link>
                       </Button>
                     </SheetClose>

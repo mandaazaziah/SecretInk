@@ -111,11 +111,11 @@ export default function RegisterPage() {
 
       {/* Penyesuaian jarak atas ke navbar (pt-28/sm:pt-32) dan bawah ke footer (pb-16) */}
       <main className="flex-1 flex flex-col items-center justify-center w-full px-4 pt-28 pb-16 sm:pt-32">
-        <div className="glass-card rounded-2xl p-8 w-full max-w-md shadow-soft-lg animate-fade-in-up">
+        <div className="glass-card rounded-2xl p-8 w-full max-w-md shadow-soft-lg">
           {/* Header */}
           <div className="flex flex-col items-center mb-8">
-            <div className="flex items-center justify-center w-14 h-14 rounded-full bg-accent mb-4">
-              <img src="/logo.svg" alt="SecretInk Logo" className="size-7 logo-zoom" />
+            <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-accent mb-4">
+              <img src="/logo.png" alt="SecretInk Logo" className="size-10" />
             </div>
             <h1 className="text-2xl font-bold text-navy" style={{ fontFamily: "var(--font-poppins)" }}>
               Buat Akun Anda

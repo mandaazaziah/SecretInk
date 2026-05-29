@@ -371,7 +371,7 @@ export default function NotesPage() {
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-border/50">
         <div className="mx-auto max-w-6xl flex items-center justify-between px-4 sm:px-6 lg:px-8 h-14">
           <Link href="/dashboard" className="flex items-center gap-2 group cursor-pointer">
-            <img src="/logo.svg" alt="SecretInk" className="h-7 logo-zoom" />
+            <img src="/logo.png" alt="SecretInk" className="h-7" />
             <span className="text-lg font-bold font-[family-name:var(--font-poppins)]">
               <span className="text-navy group-hover:text-royal transition-colors">Secret</span>
               <span className="text-royal group-hover:text-royal-light transition-colors">Ink</span>
@@ -393,14 +393,13 @@ export default function NotesPage() {
           <div className="mb-8 animate-fade-in-up">
             <div className="flex flex-wrap items-center gap-4 mb-2">
               <Button
-                variant="outline"
-                size="sm"
+                variant="ghost"
+                size="icon"
                 asChild
-                className="gap-2 border-royal/20 text-royal hover:bg-royal/5 hover:text-royal shrink-0 cursor-pointer"
+                className="hover:bg-white/50 cursor-pointer"
               >
                 <Link href="/dashboard">
                   <ArrowLeft className="size-4 icon-pop" />
-                  Kembali
                 </Link>
               </Button>
               

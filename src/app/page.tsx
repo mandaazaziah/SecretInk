@@ -158,8 +158,8 @@ export default function Home() {
             </div>
 
             {/* Typing effect line */}
-            <div className="animate-fade-in-up delay-200 mt-6 flex items-center justify-center gap-2 sm:mt-8">
-              <img src="/logo.svg" alt="SecretInk Logo" className="size-5 sm:size-6 logo-zoom" />
+            <div className="delay-200 mt-6 flex items-center justify-center gap-2 sm:mt-8">
+              <img src="/logo.png" alt="SecretInk Logo" className="size-8 sm:size-6" />
               <span className="font-heading text-lg font-semibold text-navy/80 sm:text-xl md:text-2xl">
                 <span className="typing-cursor text-royal">{displayedText}</span>
               </span>
@@ -248,7 +248,10 @@ export default function Home() {
             {/* Section heading */}
             <div className="animate-fade-in-up mb-14 text-center sm:mb-16">
               <h2 className="font-heading text-3xl font-bold text-navy sm:text-4xl">
-                Mengapa Memilih <span className="gradient-text-royal">SecretInk</span>?
+                Mengapa Memilih{' '}
+                <span className="gradient-text-royal inline-block transition-all duration-500 group-hover:opacity-80 group-hover:scale-[1.03] group-hover:[filter:drop-shadow(0_0_20px_rgba(107,127,215,0.4))]">
+                  SecretInk
+                </span>
               </h2>
               <p className="mx-auto mt-4 max-w-xl font-sans text-base text-navy/50">
                  Privasi Anda adalah prioritas utama — setiap catatan diamankan dengan enkripsi tingkat tinggi dengan perlindungan menyeluruh.
@@ -315,7 +318,10 @@ export default function Home() {
             {/* Section heading */}
             <div className="animate-fade-in-up mb-14 text-center sm:mb-16">
               <h2 className="font-heading text-3xl font-bold text-navy sm:text-4xl">
-                Cara Kerja <span className="gradient-text-royal">SecretInk</span>
+                Cara Kerja{' '}
+                <span className="gradient-text-royal inline-block transition-all duration-500 group-hover:opacity-80 group-hover:scale-[1.03] group-hover:[filter:drop-shadow(0_0_20px_rgba(107,127,215,0.4))]">
+                  SecretInk
+                </span>
               </h2>
               <p className="mx-auto mt-4 max-w-xl font-sans text-base text-navy/50">
                Tiga langkah sederhana untuk menjaga keamanan catatan Anda.
@@ -429,7 +435,7 @@ export default function Home() {
             <div className="glass-card animate-fade-in-up rounded-3xl p-8 text-center shadow-soft-lg sm:p-12">
               {/* Decorative icon */}
               <div className="mx-auto mb-6 flex size-14 items-center justify-center rounded-2xl bg-royal/10">
-                <img src="/logo.svg" alt="SecretInk Logo" className="size-7 logo-zoom" />
+                <img src="/logo.png" alt="SecretInk Logo" className="size-10 logo-zoom" />
               </div>
 
               <h2 className="font-heading text-2xl font-bold text-navy sm:text-3xl md:text-4xl">

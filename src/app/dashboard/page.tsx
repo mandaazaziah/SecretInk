@@ -117,7 +117,7 @@ export default function DashboardPage() {
   const [decryptedContent, setDecryptedContent] = useState<string | null>(null);
   const [decrypting, setDecrypting] = useState(false);
   const [copied, setCopied] = useState(false);
-  
+
   // Timer State untuk Sesi Dekripsi
   const [decryptSessionTimer, setDecryptSessionTimer] = useState<number | null>(null);
 
@@ -125,6 +125,9 @@ export default function DashboardPage() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [noteToDelete, setNoteToDelete] = useState<NoteSummary | null>(null);
   const [deleting, setDeleting] = useState(false);
+
+  // Logout confirmation dialog
+  const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
 
   // ─── Auth redirect ─────────────────────────────────────────────────────────
   useEffect(() => {
@@ -343,7 +346,7 @@ export default function DashboardPage() {
         <div className="flex h-full flex-col">
           {/* Sidebar Logo Header */}
           <div className="flex items-center gap-2.5 border-b border-border/50 px-5 py-4">
-            <img src="/logo.svg" alt="SecretInk" className="h-7 logo-zoom" />
+            <img src="/logo.png" alt="SecretInk" className="h-7" />
             <span
               className="text-lg font-bold tracking-tight cursor-default"
               style={{ fontFamily: 'Poppins, sans-serif' }}
@@ -509,7 +512,7 @@ export default function DashboardPage() {
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => signOut({ callbackUrl: '/' })}
+              onClick={() => setLogoutDialogOpen(true)}
               className="text-muted-foreground hover:text-destructive gap-1.5 cursor-pointer"
             >
               <LogOut className="size-4 icon-pop" />
@@ -522,7 +525,8 @@ export default function DashboardPage() {
         <main className="flex-1 overflow-y-auto">
           <div className="w-full px-4 py-6 sm:px-6 lg:px-8">
             {/* ═══════════ TOP STATS BAR ═══════════ */}
-            <div className="animate-fade-in-up mb-6 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+            {/* Responsive grid for stats cards */}
+            <div className="animate-fade-in-up mb-6 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-3 md:gap-4">
               {/* Total Catatan */}
               <div className="glass-card rounded-xl p-4 shadow-soft transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-0.5 cursor-default">
                 <div className="flex items-center gap-3">
@@ -642,7 +646,6 @@ export default function DashboardPage() {
 
                     {/* Decrypt Section */}
                     <div className="glass-card rounded-xl p-6 shadow-soft">
-                      {/* Diperbarui: Teks "Dekripsi Catatan" diubah menjadi "Kunci Enkripsi" */}
                       <h3 className="font-heading mb-4 flex items-center gap-2 text-base font-semibold text-navy cursor-default">
                         <KeyRound className="size-4 text-royal icon-pop" />
                         Kunci Enkripsi
@@ -715,7 +718,7 @@ export default function DashboardPage() {
                           }} 
                         />
                         
-                        <div className="mb-4 flex items-center justify-between mt-1">
+                        <div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between mt-1 gap-3">
                           <h3 className="font-heading flex items-center gap-2 text-base font-semibold text-navy cursor-default">
                             <Check className="size-4 text-mint icon-pop" />
                             Konten Terdekripsi
@@ -726,12 +729,13 @@ export default function DashboardPage() {
                               </span>
                             )}
                           </h3>
-                          <div className="flex items-center gap-2">
+                          {/* Responsive flex-wrap for buttons */}
+                          <div className="flex flex-wrap items-center gap-2">
                             <Button
                               variant="outline"
                               size="sm"
                               onClick={handleCopy}
-                              className="gap-1.5 cursor-pointer"
+                              className="gap-1.5 cursor-pointer flex-1 sm:flex-none justify-center"
                             >
                               {copied ? (
                                 <>
@@ -749,7 +753,7 @@ export default function DashboardPage() {
                               asChild
                               variant="outline"
                               size="sm"
-                              className="gap-1.5 cursor-pointer"
+                              className="gap-1.5 cursor-pointer flex-1 sm:flex-none justify-center"
                             >
                               <Link href={`/notes?edit=${selectedNote.id}`}>
                                 <Edit3 className="size-3.5 icon-pop" />
@@ -775,6 +779,7 @@ export default function DashboardPage() {
 
       {/* ═══════════ DIALOG KONFIRMASI HAPUS ═══════════ */}
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        {/* Added [&>button]:hidden to remove default close icon */}
         <DialogContent className="p-0 overflow-hidden sm:max-w-md bg-white border-0 rounded-2xl shadow-xl [&>button]:hidden">
           {/* Header Pop-up */}
           <div className="bg-red-50/80 px-5 py-4 border-b border-red-100/80">
@@ -828,6 +833,40 @@ export default function DashboardPage() {
               )}
             </Button>
           </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* ═══════════ LOGOUT CONFIRMATION DIALOG ═══════════ */}
+      <Dialog open={logoutDialogOpen} onOpenChange={setLogoutDialogOpen}>
+        <DialogContent className="sm:max-w-md bg-white border-0 shadow-2xl [&>button]:hidden rounded-2xl p-6">
+          <DialogHeader className="mb-2">
+            <DialogTitle className="flex flex-col items-center gap-3 font-heading text-navy text-center">
+              <div className="flex size-12 items-center justify-center rounded-full bg-red-500/10 mb-1">
+                <LogOut className="size-6 text-red-500" />
+              </div>
+              <span className="text-xl font-bold">Konfirmasi Keluar</span>
+            </DialogTitle>
+            <DialogDescription className="text-center text-slate-600/90 font-medium">
+              Apakah Anda yakin ingin keluar dari akun Anda? Anda harus masuk kembali untuk mengakses catatan.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <DialogFooter className="flex flex-col sm:flex-row gap-3 mt-6 sm:justify-center w-full">
+            <Button
+              variant="outline"
+              onClick={() => setLogoutDialogOpen(false)}
+              className="flex-1 rounded-xl h-11 border-slate-300/50 bg-white/40 text-slate-700 hover:bg-white/60 hover:text-navy cursor-pointer transition-colors"
+            >
+              Batal
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => signOut({ callbackUrl: '/' })}
+              className="flex-1 rounded-xl h-11 bg-red-500 hover:bg-red-600 shadow-md cursor-pointer transition-colors"
+            >
+              Keluar
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
