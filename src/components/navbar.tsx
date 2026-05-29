@@ -206,7 +206,7 @@ export default function Navbar() {
                 )}
               >
                 <SheetTitle className="flex items-center gap-2.5">
-                  <img src="/logo.svg" alt="SecretInk Logo" className="size-6 logo-zoom" />
+                  <img src="/logo.png" alt="SecretInk Logo" className="size-6 logo-zoom" />
                   <BrandTitle className="text-lg font-bold" />
                 </SheetTitle>
               </SheetHeader>

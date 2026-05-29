@@ -102,7 +102,7 @@ export default function Footer() {
       >
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-5 sm:flex-row sm:px-6 lg:px-8">
           <p className="text-xs text-gray-500">
-            &copy; 2025 SecretInk. Hak cipta dilindungi.
+            &copy; 2026 SecretInk. Hak cipta dilindungi.
           </p>
           <button
             type="button"
@@ -118,7 +118,7 @@ export default function Footer() {
               style={{ color: lockHovered ? '#10B981' : undefined }}
             />
             <span>
-              Dilindungi dengan <Heart className="inline h-3 w-3 text-red-400" /> dan AES-256
+              Dilindungi dengan AES-256
             </span>
           </button>
         </div>

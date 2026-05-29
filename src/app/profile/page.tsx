@@ -191,44 +191,54 @@ export default function ProfilePage() {
       <main className="flex-1 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto space-y-6 animate-fade-in-up">
           {/* Header */}
-          <div className="flex items-center gap-4 mb-8">
+          <div className="flex items-start gap-4 mb-8">
             <Button
               variant="ghost"
               size="icon"
               onClick={() => router.back()}
-              className="hover:bg-white/50 cursor-pointer" 
+              className="hover:bg-white/50 cursor-pointer shrink-0 mt-0.5 sm:mt-1" 
             >
               <ArrowLeft className="h-5 w-5 icon-pop" />
             </Button>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-poppins)]">
+            <div className="flex flex-col min-w-0">
+              <h1 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-poppins)] truncate">
                 Pengaturan Profil
               </h1>
-              <p className="text-muted-foreground text-sm">Kelola informasi akun Anda</p>
+              <p className="text-muted-foreground text-sm mt-0.5 truncate">
+                Kelola informasi akun Anda
+              </p>
             </div>
           </div>
 
           {/* Profile Info Card */}
           <Card className="glass-card shadow-soft-lg border-0 rounded-2xl overflow-hidden">
-            <CardHeader className="pb-1">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-royal to-royal-dark flex items-center justify-center text-white font-bold text-lg">
-                  {session.user?.name?.charAt(0).toUpperCase() || "U"}
+            <CardHeader className="pb-4 pt-5 px-5 sm:px-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 w-full">
+                <div className="flex items-center gap-4 flex-1 min-w-0">
+                  <div className="w-14 h-14 shrink-0 rounded-full bg-gradient-to-br from-royal to-royal-dark flex items-center justify-center text-white font-bold text-xl">
+                    {session.user?.name?.charAt(0).toUpperCase() || "U"}
+                  </div>
+                  
+                  <div className="flex flex-col min-w-0">
+                    <CardTitle style={{ fontFamily: "Poppins, sans-serif" }} className="text-xl font-semibold text-navy truncate">
+                      {session.user?.name}
+                    </CardTitle>
+                    <CardDescription className="text-sm text-muted-foreground truncate mt-0.5">
+                      {session.user?.email}
+                    </CardDescription>
+                  </div>
                 </div>
-                <div>
-                  <CardTitle style={{ fontFamily: "Poppins, sans-serif" }} className="text-lg">
-                    {session.user?.name}
-                  </CardTitle>
-                  <CardDescription>{session.user?.email}</CardDescription>
+
+                <div className="flex w-fit">
+                  <Badge className="shrink-0 bg-blue-500/10 text-blue-500 border border-blue-500/20 hover:bg-blue-500/20 px-3 py-1 font-medium text-xs rounded-full cursor-default">
+                    <Shield className="h-3.5 w-3.5 mr-1.5 opacity-80" />
+                    {(session.user as { role: string }).role || "user"}
+                  </Badge>
                 </div>
-                <Badge className="ml-auto bg-blue-500/10 text-blue-500 border-blue-500/20 hover:bg-blue-500/20">
-                  <Shield className="h-3 w-3 mr-1 icon-pop" />
-                  {(session.user as { role: string }).role || "user"}
-                </Badge>
               </div>
             </CardHeader>
-            <Separator className="opacity-50" />
-            <CardContent className="pt-1 space-y-3">
+            <hr className="border-t-2 border-slate-300 w-full" />
+            <CardContent className="p-4 pt-2 sm:p-6 sm:pt-3 space-y-3">
               <div className="space-y-2">
                 <Label htmlFor="username" className="flex items-center gap-2">
                   <User className="h-4 w-4 text-royal icon-pop" />
@@ -307,7 +317,7 @@ export default function ProfilePage() {
                 Perbarui kata sandi akun Anda untuk keamanan yang lebih baik
               </CardDescription>
             </CardHeader>
-            <Separator className="opacity-50" />
+            <hr className="border-t-2 border-slate-300 w-full" />
             <CardContent className="pt-1 space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="currentPassword">Kata Sandi Saat Ini</Label>
@@ -397,7 +407,7 @@ export default function ProfilePage() {
                 Tindakan ini permanen dan tidak dapat dibatalkan
               </CardDescription>
             </CardHeader>
-            <Separator className="opacity-50" />
+            <hr className="border-t-2 border-slate-300 w-full" />
             <CardContent className="pt-1 space-y-4">
               <p className="text-sm text-muted-foreground mb-4">
                 Menghapus akun akan menghapus semua data Anda termasuk seluruh catatan
