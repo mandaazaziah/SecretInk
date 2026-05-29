@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   description: "Store your secret notes with military-grade AES-256 encryption. Your data, your privacy, your control.",
   keywords: ["encryption", "secure notes", "AES", "privacy", "secret notes", "SecretInk"],
   icons: {
-    icon: "/logo.svg",
+    icon: "/logo.png",
   },
 };
 

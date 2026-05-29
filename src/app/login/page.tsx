@@ -84,7 +84,7 @@ export default function LoginPage() {
       <main className="flex-1 flex flex-col items-center justify-center w-full px-4 pt-28 pb-16 sm:pt-32">
         <div
           className={cn(
-            'w-full max-w-md animate-fade-in-up'
+            'w-full max-w-md'
           )}
         >
           {/* Login Card */}
@@ -98,7 +98,7 @@ export default function LoginPage() {
                   'bg-accent'
                 )}
               >
-                <img src="/logo.svg" alt="SecretInk Logo" className="size-7 logo-zoom" />
+                <img src="/logo.png" alt="SecretInk Logo" className="size-10" />
               </div>
               <h1
                 className={cn(
@@ -179,7 +179,6 @@ export default function LoginPage() {
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-navy transition-colors"
                     aria-label={showPassword ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi'}
                   >
-                    {/* Logika dikembalikan ke semula */}
                     {showPassword ? (
                       <EyeOff className="size-4 icon-pop" />
                     ) : (
@@ -212,8 +211,9 @@ export default function LoginPage() {
                     Ingat saya
                   </Label>
                 </div>
+                {/* INI BAGIAN YANG DIPERBAIKI */}
                 <Link
-                  href="#"
+                  href="/forgot-password"
                   className="text-xs text-royal hover:text-royal-dark transition-colors font-medium"
                 >
                   Lupa kata sandi?

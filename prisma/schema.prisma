@@ -7,16 +7,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
-  id        String   @id @default(cuid())
-  username  String   @unique
-  email     String   @unique
-  password  String
-  role      String   @default("user")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  notes     Note[]
+  id                       String    @id @default(cuid())
+  username                 String    @unique
+  email                    String    @unique
+  password                 String
+  role                     String    @default("user")
+  createdAt                DateTime  @default(now())
+  updatedAt                DateTime  @updatedAt
+  
+  // --- Tambahkan dua field di bawah ini ---
+  resetPasswordToken       String?
+  resetPasswordTokenExpiry DateTime?
+  // ----------------------------------------
+
+  notes                    Note[]
 }
 
 model Note {
